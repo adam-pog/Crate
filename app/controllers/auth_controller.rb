@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  def sign_in
-    
+  def login
+    render json: {you: params[:okat]}
   end
 end

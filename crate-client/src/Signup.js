@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
-import './Login.css';
+import './Signup.css';
 
-class Login extends React.Component {
+class Signup extends React.Component {
   state = {
     text: ''
   }
@@ -44,7 +44,7 @@ class Login extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Log In
+            Sign Up
           </p>
         </header>
         <input
@@ -58,4 +58,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Signup;

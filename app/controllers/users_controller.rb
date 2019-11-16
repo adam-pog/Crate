@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def create
     user = User.new(user_params)
-    user.email_downcase!
+    user.email.downcase!
 
     status = user.save ? :ok : :bad_request
 

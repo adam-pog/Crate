@@ -4,26 +4,43 @@ import './Signup.css';
 
 class Signup extends React.Component {
   state = {
-    text: ''
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
   }
-
-  handleSubmit(event) {
-    // fetch('http://localhost:8081', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     location: this.state.location,
-    //     page: parseInt(this.state.page)
-    //   })
+  // handleSubmit(event) {
+  //   // fetch('http://localhost:8081', {
+  //   //   method: 'POST',
+  //   //   body: JSON.stringify({
+  //   //     location: this.state.location,
+  //   //     page: parseInt(this.state.page)
+  //   //   })
+  //   // })
+  //   // .then(response => response.json())
+  //   // .then(data => {
+  //   //   this.setState({textLines: data.text})
+  //   // });
+  //
+    // fetch('http://localhost:3000/sign_in', {
+    //   method: 'post',
+    //   headers: {'Content-Type':'application/json'},
+    //   body: JSON.stringify({okat: ';fine'})
     // })
     // .then(response => response.json())
     // .then(data => {
-    //   this.setState({textLines: data.text})
-    // });
+    //   console.log(data)
+    // })
+  // }
 
-    fetch('http://localhost:3000/sign_in', {
+  handleSubmit(e) {
+    console.log('asdg')
+    e.preventDefault();
+
+    fetch('http://localhost:3000/user', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({okat: ';fine'})
+      body: JSON.stringify({user: this.state})
     })
     .then(response => response.json())
     .then(data => {
@@ -31,9 +48,9 @@ class Signup extends React.Component {
     })
   }
 
-  handlePageChange(e) {
+  handleFieldChange(e) {
     this.setState({
-      text: e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
@@ -47,12 +64,29 @@ class Signup extends React.Component {
             Sign Up
           </p>
         </header>
-        <input
-          name="Field"
-          placeholder="Type here"
-          onChange={(e) => this.handlePageChange(e)}
-        />
-      <input type="button" value="Submit" onClick={(e) => this.handleSubmit(e)}/>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <input
+            name="name"
+            placeholder="Name"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input
+            name="email"
+            placeholder="Email"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input
+            name="password"
+            placeholder="Pasword"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input
+            name="password_confirmation"
+            placeholder="Password Confirmation"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input type="submit" value="Submit"/>
+      </form>
       </div>
     )
   }

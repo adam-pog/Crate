@@ -4,36 +4,29 @@ import './Login.css';
 
 class Login extends React.Component {
   state = {
-    text: ''
+    email: '',
+    password: '',
+    authenticated: false
   }
 
-  handleSubmit(event) {
-    // fetch('http://localhost:8081', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     location: this.state.location,
-    //     page: parseInt(this.state.page)
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   this.setState({textLines: data.text})
-    // });
+  handleSubmit(e) {
+    e.preventDefault();
 
-    fetch('http://localhost:3000/sign_in', {
+    fetch('http://localhost:3000/login', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({okat: ';fine'})
+      credentials: 'include',
+      body: JSON.stringify(this.state)
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
+    .then(response => response.status)
+    .then(status => {
+
     })
   }
 
-  handlePageChange(e) {
+  handleFieldChange(e) {
     this.setState({
-      text: e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
@@ -44,15 +37,22 @@ class Login extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Log In
+            Login
           </p>
         </header>
-        <input
-          name="Field"
-          placeholder="Type here"
-          onChange={(e) => this.handlePageChange(e)}
-        />
-      <input type="button" value="Submit" onClick={(e) => this.handleSubmit(e)}/>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <input
+            name="email"
+            placeholder="Email"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input
+            name="password"
+            placeholder="Pasword"
+            onChange={(e) => this.handleFieldChange(e)}
+          />
+          <input type="submit" value="Submit"/>
+      </form>
       </div>
     )
   }

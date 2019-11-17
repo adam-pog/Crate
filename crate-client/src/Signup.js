@@ -1,50 +1,37 @@
 import React from 'react';
 import logo from './logo.svg';
 import './Signup.css';
+import { Redirect } from 'react-router-dom'
 
 class Signup extends React.Component {
   state = {
     name: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    redirect: false
   }
-  // handleSubmit(event) {
-  //   // fetch('http://localhost:8081', {
-  //   //   method: 'POST',
-  //   //   body: JSON.stringify({
-  //   //     location: this.state.location,
-  //   //     page: parseInt(this.state.page)
-  //   //   })
-  //   // })
-  //   // .then(response => response.json())
-  //   // .then(data => {
-  //   //   this.setState({textLines: data.text})
-  //   // });
-  //
-    // fetch('http://localhost:3000/sign_in', {
-    //   method: 'post',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify({okat: ';fine'})
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log(data)
-    // })
-  // }
 
   handleSubmit(e) {
-    console.log('asdg')
     e.preventDefault();
 
     fetch('http://localhost:3000/user', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({user: this.state})
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        password_confirmation: this.state.password_confirmation
+      })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
+    .then(response => response.status)
+    .then(status => {
+      if (status !== 200) {
+        window.location.reload(false);
+      } else {
+        this.setState({redirect: true})
+      }
     })
   }
 
@@ -87,6 +74,7 @@ class Signup extends React.Component {
           />
           <input type="submit" value="Submit"/>
       </form>
+      {this.state.redirect && <Redirect to='/login' />}
       </div>
     )
   }

@@ -35,5 +35,6 @@ module Crate
     config.middleware.use ActionDispatch::Cookies
     config.api_only = true
     config.force_ssl = true
+    config.action_controller.allow_forgery_protection
   end
 end

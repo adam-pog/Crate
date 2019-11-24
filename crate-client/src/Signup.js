@@ -15,15 +15,17 @@ class Signup extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    const user_payload = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation
+    }
+
     fetch('http://localhost:3000/user', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-        password_confirmation: this.state.password_confirmation
-      })
+      body: JSON.stringify({ user: user_payload })
     })
     .then(response => response.status)
     .then(status => {

@@ -1,24 +1,26 @@
 class AuthController < ApplicationController
-  include ActionController::RequestForgeryProtection
-
-  ALG = 'HS256'
-
   def login
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password])
-      payload = {sub: user.id, email: user.email}
+      payload = {
+        sub: user.id,
+        email: user.email,
+        exp: (60).minutes.from_now.to_i
+      }
       token = JWT.encode(
         payload,
-        Rails.application.credentials.hmac_secret,
-        ALG,
-        { typ: 'JWT' }
+        Rails.application.credentials.alg_secret,
+        Rails.application.credentials.signing_alg
       )
-      cookies[:token] = { value: token, httponly: true, secure: true}
 
-      render json: {csrf_token: form_authenticity_token}, status: :ok
+      render json: {token: token}, status: :ok
     else
       render json: {}, status: :unauthorized
     end
+  end
+
+  def test
+    render json: {you: 'did it!'}, status: :ok
   end
 end

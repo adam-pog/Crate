@@ -5,6 +5,27 @@ import Login from './Login.js'
 import Signup from './Signup.js'
 
 class App extends React.Component {
+  wow() {
+    const token = window.sessionStorage.getItem("token");
+    fetch('http://localhost:3000/test', {
+      method: 'get',
+      headers: {
+        'Content-Type':'application/json',
+        "Authorization" : `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      return Promise.all([response.status, response.json()])
+    })
+    .then(([status, response]) => {
+      if(status === 200) {
+        console.log('your logged in!')
+      } else {
+        console.log('uh oh')
+      }
+    })
+
+  }
   render() {
     return (
       <div className="App">
@@ -18,7 +39,7 @@ class App extends React.Component {
 
             <Switch>
               <Route exact path="/">
-                <p>Hello</p>
+                <p onClick={() => this.wow() }>Hello</p>
               </Route>
               <Route path="/login">
                 <Login />

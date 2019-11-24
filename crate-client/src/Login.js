@@ -12,15 +12,20 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    fetch('https://localhost:3000/login', {
+    fetch('http://localhost:3000/login', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
-      credentials: 'include',
       body: JSON.stringify(this.state)
     })
-    .then(response => response.status)
-    .then(status => {
-
+    .then(response => {
+      return Promise.all([response.status, response.json()])
+    })
+    .then(([status, response]) => {
+      if(status === 200) {
+        window.sessionStorage.setItem("token", response.token);
+      } else {
+        console.log('uh oh')
+      }
     })
   }
 

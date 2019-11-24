@@ -21,6 +21,6 @@ class AuthController < ApplicationController
   end
 
   def test
-    render json: {you: 'did it!'}, status: :ok
+    render json: {name: @current_user.name}, status: :ok
   end
 end

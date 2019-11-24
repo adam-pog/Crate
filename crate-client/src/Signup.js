@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './Signup.css';
 import { Redirect } from 'react-router-dom'
+import { Fetch } from './FetchHelper.js'
 
 class Signup extends React.Component {
   state = {
@@ -22,11 +23,11 @@ class Signup extends React.Component {
       password_confirmation: this.state.password_confirmation
     }
 
-    fetch('http://localhost:3000/user', {
-      method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ user: user_payload })
-    })
+    Fetch(
+      'http://localhost:3000/user',
+      'post',
+      JSON.stringify({ user: user_payload })
+    )
     .then(response => response.status)
     .then(status => {
       if (status !== 200) {

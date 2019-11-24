@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './Login.css';
+import { Fetch } from './FetchHelper.js'
 
 class Login extends React.Component {
   state = {
@@ -12,11 +13,7 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    fetch('http://localhost:3000/login', {
-      method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(this.state)
-    })
+    Fetch('http://localhost:3000/login', 'post', JSON.stringify(this.state))
     .then(response => {
       return Promise.all([response.status, response.json()])
     })

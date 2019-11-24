@@ -3,28 +3,21 @@ import './App.css';
 import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom'
 import Login from './Login.js'
 import Signup from './Signup.js'
+import { Fetch } from './FetchHelper.js'
 
 class App extends React.Component {
   wow() {
-    const token = window.sessionStorage.getItem("token");
-    fetch('http://localhost:3000/test', {
-      method: 'get',
-      headers: {
-        'Content-Type':'application/json',
-        "Authorization" : `Bearer ${token}`
-      }
-    })
+    Fetch('http://localhost:3000/test', 'get')
     .then(response => {
       return Promise.all([response.status, response.json()])
     })
     .then(([status, response]) => {
       if(status === 200) {
-        console.log('your logged in!')
+        console.log(`you're authenticated ${response.name}!`)
       } else {
         console.log('uh oh')
       }
     })
-
   }
   render() {
     return (

@@ -4,7 +4,19 @@ class ApplicationController < ActionController::API
 
   before_action :authenicate_user, except: [:login, :create_user]
 
+  private
+
   def authenicate_user
+    jwt = parse_token
+
+    if jwt
+      @current_user = ::User.find_by(email: jwt.first['email'])
+    else
+      render json: {}, status: :unauthorized
+    end
+  end
+
+  def parse_token
     authenticate_with_http_token do |token, _|
       JWT.decode(
         token,

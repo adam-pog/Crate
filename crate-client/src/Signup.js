@@ -76,8 +76,8 @@ class Signup extends React.Component {
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input type="submit" value="Submit"/>
-      </form>
-      {this.state.redirect && <Redirect to='/login' />}
+        </form>
+        {this.state.redirect && <Redirect to='/login' />}
       </div>
     )
   }

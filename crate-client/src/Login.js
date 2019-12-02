@@ -2,28 +2,17 @@ import React from 'react';
 import logo from './logo.svg';
 import './Login.css';
 import { Fetch } from './FetchHelper.js'
+import { Redirect } from 'react-router-dom'
 
 class Login extends React.Component {
   state = {
     email: '',
-    password: '',
-    authenticated: false
+    password: ''
   }
 
   handleSubmit(e) {
     e.preventDefault();
-
-    Fetch('http://localhost:3000/login', 'post', JSON.stringify(this.state))
-    .then(response => {
-      return Promise.all([response.status, response.json()])
-    })
-    .then(([status, response]) => {
-      if(status === 200) {
-        window.sessionStorage.setItem("token", response.token);
-      } else {
-        console.log('uh oh')
-      }
-    })
+    this.props.authenticate(this.state.email, this.state.password);
   }
 
   handleFieldChange(e) {
@@ -54,7 +43,8 @@ class Login extends React.Component {
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input type="submit" value="Submit"/>
-      </form>
+        </form>
+        {this.props.authenticated && <Redirect to='/' />}
       </div>
     )
   }

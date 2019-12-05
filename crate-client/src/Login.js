@@ -3,6 +3,17 @@ import logo from './logo.svg';
 import './Login.css';
 import { Fetch } from './FetchHelper.js'
 import { Redirect } from 'react-router-dom'
+import { setAuthenticated } from "./actions/index";
+import { connect } from "react-redux";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuthenticated: authenticated => (
+      dispatch(setAuthenticated(authenticated))
+    )
+  };
+}
+
 
 class Login extends React.Component {
   state = {
@@ -12,7 +23,20 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.authenticate(this.state.email, this.state.password);
+
+    const body = { email: this.state.email, password: this.state.password }
+    Fetch('http://localhost:3000/login', 'post', JSON.stringify(body))
+    .then(response => {
+      return Promise.all([response.status, response.json()])
+    })
+    .then(([status, response]) => {
+      if(status === 200) {
+        window.sessionStorage.setItem("token", response.token);
+        this.props.setAuthenticated(true)
+      } else {
+        console.log('uh oh')
+      }
+    })
   }
 
   handleFieldChange(e) {
@@ -50,4 +74,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

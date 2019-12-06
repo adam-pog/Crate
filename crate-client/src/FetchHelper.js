@@ -1,12 +1,15 @@
+import Cookies from 'js-cookie';
+
 export function Fetch(url, method, body = null) {
-  const token = window.sessionStorage.getItem("token");
+  const csrf_token = Cookies.get('CSRF-Token');
 
   return fetch(url, {
     method: method,
     headers: {
       'Content-Type':'application/json',
-      ...(token && {"Authorization" : `Bearer ${token}`})
+      ...(csrf_token && {"X-CSRF-Token" : `${csrf_token}`})
     },
+    credentials: 'include',
     ...(body && {body: body})
   })
 }

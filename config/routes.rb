@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # authenication
   post 'login', to: 'auth#login', as: :login
   get 'test', to: 'auth#test'
+  post 'test', to: 'auth#test_post'
 
   # users
   post 'user', to: 'users#create', as: :create_user

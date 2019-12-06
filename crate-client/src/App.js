@@ -10,9 +10,12 @@ const mapStateToProps = state => {
   return { authenticated: state.authenticated };
 };
 
+// TODO: setup cookie auth (investigate csrf token)
+// TODO: setup redirect with history in redux
+
 class App extends React.Component {
   wow() {
-    Fetch('http://localhost:3000/test', 'get')
+    Fetch('http://localhost:3000/test', 'post')
     .then(response => {
       return Promise.all([response.status, response.json()])
     })

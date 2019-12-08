@@ -1,7 +1,7 @@
 import { SET_AUTHENTICATED } from "../constants/action-types";
 
 const initialState = {
-  authenticated: window.sessionStorage.getItem("token")
+  authenticated: window.sessionStorage.getItem("authenticated")
 };
 
 function rootReducer(state = initialState, action) {

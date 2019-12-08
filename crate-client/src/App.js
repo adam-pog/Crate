@@ -10,9 +10,6 @@ const mapStateToProps = state => {
   return { authenticated: state.authenticated };
 };
 
-// TODO: setup cookie auth (investigate csrf token)
-// TODO: setup redirect with history in redux
-
 class App extends React.Component {
   wow() {
     Fetch('http://localhost:3000/test', 'post')
@@ -42,7 +39,7 @@ class App extends React.Component {
                 <Link className="App-link" to="/login" > Login </Link>
               </div>
             }
-
+            {/* TODO: make private route wrapper component? */}
             <Switch>
               <Route exact path="/">
                 <p onClick={() => this.wow() }>Hello</p>

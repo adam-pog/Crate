@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  protect_from_forgery with: :exception, except: [:create]
+  skip_before_action :require_login, only: [:create]
+
+
   def create
     user = User.new(user_params)
     user.email.downcase!

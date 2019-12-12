@@ -17,7 +17,6 @@ class SessionsController < ApplicationController
   end
 
   def test_post
-    binding.pry
     render json: {name: @current_user.name}, status: :ok
   end
 

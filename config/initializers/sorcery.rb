@@ -2,7 +2,7 @@
 # The default is nothing which will include only core features (password encryption, login/logout).
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external
-Rails.application.config.sorcery.submodules = []
+Rails.application.config.sorcery.submodules = [:session_timeout]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -39,7 +39,7 @@ Rails.application.config.sorcery.configure do |config|
   # How long in seconds to keep the session alive.
   # Default: `3600`
   #
-  # config.session_timeout =
+  config.session_timeout = 1.hour
 
   # Use the last action as the beginning of session timeout.
   # Default: `false`
@@ -49,7 +49,7 @@ Rails.application.config.sorcery.configure do |config|
   # Invalidate active sessions Requires an `invalidate_sessions_before` timestamp column
   # Default: `false`
   #
-  # config.session_timeout_invalidate_active_sessions_enabled =
+  # config.session_timeout_invalidate_active_sessions_enabled = true
 
   # -- http_basic_auth --
   # What realm to display for which controller name. For example {"My App" => "Application"}
@@ -384,7 +384,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `5 * 60`
     #
     # user.reset_password_time_between_emails =
-    
+
     # access counter to a reset password page attribute name
     # Default: `:access_count_to_reset_password_page`
     #

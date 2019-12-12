@@ -1,33 +1,17 @@
 class ApplicationController < ActionController::API
+  include ActionController::RequestForgeryProtection
   include ActionController::HttpAuthentication::Token::ControllerMethods
   include ::ActionController::Cookies
 
-  before_action :authenicate_user, except: [:login, :create_user]
+  protect_from_forgery with: :exception
+  before_action :require_login
+  after_action :set_csrf_cookie
 
   private
 
-  def authenicate_user
-    jwt = parse_token
-
-    if jwt
-      @current_user = ::User.find_by(email: jwt.first['email'])
-    else
-      render json: {}, status: :unauthorized
+  def set_csrf_cookie
+    if session[:user_id]
+      cookies['CSRF-Token'] = form_authenticity_token
     end
-  end
-
-  def parse_token
-    authenticate_with_http_token do |token, _|
-      JWT.decode(
-        token,
-        Rails.application.credentials.alg_secret,
-        true,
-        { algorithm: Rails.application.credentials.signing_alg }
-      )
-    end
-  rescue => e
-    Rails.logger.info("AUTH FAILURE: #{e}")
-
-    render json: {}, status: :unauthorized
   end
 end

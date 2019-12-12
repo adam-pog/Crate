@@ -31,7 +31,7 @@ class Login extends React.Component {
     })
     .then(([status, response]) => {
       if(status === 200) {
-        window.sessionStorage.setItem("token", response.token);
+        window.sessionStorage.setItem("authenticated", true);
         this.props.setAuthenticated(true)
       } else {
         console.log('uh oh')

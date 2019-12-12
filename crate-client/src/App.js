@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 class App extends React.Component {
   wow() {
-    Fetch('http://localhost:3000/test', 'get')
+    Fetch('http://localhost:3000/test', 'post')
     .then(response => {
       return Promise.all([response.status, response.json()])
     })
@@ -39,7 +39,7 @@ class App extends React.Component {
                 <Link className="App-link" to="/login" > Login </Link>
               </div>
             }
-
+            {/* TODO: make private route wrapper component? */}
             <Switch>
               <Route exact path="/">
                 <p onClick={() => this.wow() }>Hello</p>

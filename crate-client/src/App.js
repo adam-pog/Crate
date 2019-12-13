@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom'
+import { Route, Router, Switch, Link } from 'react-router-dom'
 import Login from './Login.js'
 import Signup from './Signup.js'
 import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
+import history from './history';
+
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated };
@@ -22,11 +24,19 @@ class App extends React.Component {
     })
   }
 
+  // const PrivateRoute = ({ component: Component, ...rest }) => (
+  //   <Route {...rest} render={(props) => (
+  //     this.props.authenticated
+  //       ? <Component {...props} />
+  //       : <Redirect to='/login' />
+  //   )} />
+  // )
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <Router>
+          <Router history={ history }>
             <Link className="App-link" to="/" > Home </Link>
             { !this.props.authenticated &&
               <div>

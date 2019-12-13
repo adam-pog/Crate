@@ -1,4 +1,4 @@
-import { SET_AUTHENTICATED } from "../constants/action-types";
+import { SET_AUTHENTICATED } from '../constants/action-types';
 
 const initialState = {
   authenticated: window.sessionStorage.getItem("authenticated") === 'true'

@@ -2,9 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './Login.css';
 import { Fetch } from './FetchHelper.js'
-import { Redirect } from 'react-router-dom'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
+import history from './history'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -29,6 +29,7 @@ class Login extends React.Component {
     .then(([status, response]) => {
       if(status === 200) {
         this.props.setAuthenticated(true)
+        history.push('/')
       } else {
         console.log('uh oh')
       }
@@ -60,11 +61,11 @@ class Login extends React.Component {
           <input
             name="password"
             placeholder="Pasword"
+            type="password"
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input type="submit" value="Submit"/>
         </form>
-        {this.props.authenticated && <Redirect to='/' />}
       </div>
     )
   }

@@ -1,16 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './Signup.css';
-import { Redirect } from 'react-router-dom'
 import { Fetch } from './FetchHelper.js'
+import history from './history'
+
 
 class Signup extends React.Component {
   state = {
     name: '',
     email: '',
     password: '',
-    password_confirmation: '',
-    redirect: false
+    password_confirmation: ''
   }
 
   handleSubmit(e) {
@@ -32,7 +32,7 @@ class Signup extends React.Component {
       if (status !== 200) {
         window.location.reload(false);
       } else {
-        this.setState({redirect: true})
+        history.push('/login')
       }
     })
   }
@@ -66,17 +66,18 @@ class Signup extends React.Component {
           />
           <input
             name="password"
-            placeholder="Pasword"
+            placeholder="Password"
+            type="password"
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input
             name="password_confirmation"
             placeholder="Password Confirmation"
+            type="password"
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input type="submit" value="Submit"/>
         </form>
-        {this.state.redirect && <Redirect to='/login' />}
       </div>
     )
   }

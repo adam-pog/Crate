@@ -26,12 +26,8 @@ class Login extends React.Component {
 
     const body = { email: this.state.email, password: this.state.password }
     Fetch('http://localhost:3000/login', 'post', JSON.stringify(body))
-    .then(response => {
-      return Promise.all([response.status, response.json()])
-    })
     .then(([status, response]) => {
       if(status === 200) {
-        window.sessionStorage.setItem("authenticated", true);
         this.props.setAuthenticated(true)
       } else {
         console.log('uh oh')

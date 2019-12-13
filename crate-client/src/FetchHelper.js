@@ -1,4 +1,6 @@
 import Cookies from 'js-cookie';
+import { setAuthenticated } from './actions/index';
+import Store from './configureStore'
 
 export function Fetch(url, method, body = null) {
   const csrf_token = Cookies.get('CSRF-Token');
@@ -11,5 +13,15 @@ export function Fetch(url, method, body = null) {
     },
     credentials: 'include',
     ...(body && {body: body})
+  })
+  .then(response => {
+    return Promise.all([response.status, response.json()])
+  })
+  .then(([status, response]) => {
+    if(status === 401) {
+      Store.dispatch(setAuthenticated(false))
+    }
+
+    return Promise.all([status, response])
   })
 }

@@ -28,8 +28,7 @@ class Signup extends React.Component {
       'post',
       JSON.stringify({ user: user_payload })
     )
-    .then(response => response.status)
-    .then(status => {
+    .then(([status, _response]) => {
       if (status !== 200) {
         window.location.reload(false);
       } else {

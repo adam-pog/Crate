@@ -13,9 +13,6 @@ const mapStateToProps = state => {
 class App extends React.Component {
   wow() {
     Fetch('http://localhost:3000/test', 'post')
-    .then(response => {
-      return Promise.all([response.status, response.json()])
-    })
     .then(([status, response]) => {
       if(status === 200) {
         console.log(`you're authenticated ${response.name}!`)

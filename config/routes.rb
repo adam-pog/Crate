@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # authenication
   post 'login', to: 'sessions#create', as: :login
+  post 'logout', to: 'sessions#destroy', as: :logout
   get 'test', to: 'sessions#test'
   post 'test', to: 'sessions#test_post'
 

@@ -6,18 +6,24 @@ class SessionsController < ApplicationController
     user = login(params[:email], params[:password])
 
     if user
-      render json: {}, status: :ok
+      render json: { name: user.name }, status: :ok
     else
       render json: {}, status: :unauthorized
     end
   end
 
+  def destroy
+    reset_session
+
+    render json: {}, status: :ok
+  end
+
   def test
-    render json: {name: @current_user.name}, status: :ok
+    render json: {}, status: :ok
   end
 
   def test_post
-    render json: {name: @current_user.name}, status: :ok
+    render json: {}, status: :ok
   end
 
   def not_authenticated

@@ -6,18 +6,39 @@ import Signup from './Signup.js'
 import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
 import history from './history';
-
+import { setAuthenticated } from "./actions/index";
 
 const mapStateToProps = state => {
-  return { authenticated: state.authenticated };
+  return { authenticated: state.authenticated, name: state.name };
 };
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuthenticated: authenticated => (
+      dispatch(setAuthenticated(authenticated))
+    )
+  };
+}
+
 
 class App extends React.Component {
   wow() {
     Fetch('http://localhost:3000/test', 'post')
-    .then(([status, response]) => {
+    .then(([status, _response]) => {
       if(status === 200) {
-        console.log(`you're authenticated ${response.name}!`)
+        console.log(`you're authenticated ${this.props.name}!`)
+      } else {
+        console.log('uh oh')
+      }
+    })
+  }
+
+  logout() {
+    Fetch('http://localhost:3000/logout', 'post')
+    .then(([status, _response]) => {
+      if(status === 200) {
+        console.log('logged out')
+        this.props.setAuthenticated({authenticated: false, name: ''})
       } else {
         console.log('uh oh')
       }
@@ -46,10 +67,16 @@ class App extends React.Component {
                 <Link className="App-link" to="/login" > Login </Link>
               </div>
             }
+            { this.props.authenticated &&
+              <div>
+                <br></br>
+                <input type="button" value="Logout" onClick={() => this.logout()}/>
+              </div>
+            }
             {/* TODO: make private route wrapper component? */}
             <Switch>
               <Route exact path="/">
-                <p onClick={() => this.wow() }>Hello</p>
+                <p onClick={() => this.wow() }>Hello {this.props.name}</p>
               </Route>
               <Route path="/login">
                 <Login authenticated={this.props.authenticated} />
@@ -65,4 +92,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -19,7 +19,7 @@ export function Fetch(url, method, body = null) {
   })
   .then(([status, response]) => {
     if(status === 401) {
-      Store.dispatch(setAuthenticated(false))
+      Store.dispatch(setAuthenticated({authenticated: false, name: ''}))
     }
 
     return Promise.all([status, response])

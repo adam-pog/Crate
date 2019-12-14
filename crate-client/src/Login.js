@@ -28,7 +28,7 @@ class Login extends React.Component {
     Fetch('http://localhost:3000/login', 'post', JSON.stringify(body))
     .then(([status, response]) => {
       if(status === 200) {
-        this.props.setAuthenticated(true)
+        this.props.setAuthenticated({authenticated: true, name: response.name})
         history.push('/')
       } else {
         console.log('uh oh')

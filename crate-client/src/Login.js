@@ -4,7 +4,7 @@ import './Login.css';
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
-import history from './history'
+import history from './config/history'
 
 const mapDispatchToProps = dispatch => {
   return {

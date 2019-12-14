@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { setAuthenticated } from './actions/index';
-import Store from './configureStore'
+import Store from './config/configureStore'
 
 export function Fetch(url, method, body = null) {
   const csrf_token = Cookies.get('CSRF-Token');

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './Signup.css';
 import { Fetch } from './FetchHelper.js'
-import history from './history'
+import history from './config/history'
 
 
 class Signup extends React.Component {

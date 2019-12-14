@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import { Route, Router, Switch, Link } from 'react-router-dom'
+import { Route, Router, Switch, Link, Redirect } from 'react-router-dom'
 import Login from './Login.js'
 import Signup from './Signup.js'
 import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
-import history from './history';
+import history from './config/history';
 import { setAuthenticated } from "./actions/index";
 
 const mapStateToProps = state => {
@@ -73,16 +73,23 @@ class App extends React.Component {
                 <input type="button" value="Logout" onClick={() => this.logout()}/>
               </div>
             }
-            {/* TODO: make private route wrapper component? */}
+
             <Switch>
-              <Route exact path="/">
+              <Route exact path='/'>
                 <p onClick={() => this.wow() }>Hello {this.props.name}</p>
               </Route>
-              <Route path="/login">
-                <Login authenticated={this.props.authenticated} />
-              </Route>
-              <Route path="/signup">
-                <Signup />
+              { !this.props.authenticated &&
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+              }
+              { !this.props.authenticated &&
+                  <Route path="/signup">
+                    <Signup />
+                  </Route>
+              }
+              <Route>
+                <Redirect to='/' />
               </Route>
             </Switch>
           </Router>

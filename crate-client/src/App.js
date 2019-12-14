@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import { Route, Router, Switch, Link, Redirect } from 'react-router-dom'
+import { Route, Router, Switch, Redirect } from 'react-router-dom'
 import Login from './Login.js'
 import Signup from './Signup.js'
 import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
 import history from './config/history';
 import { setAuthenticated } from "./actions/index";
+import Menu from './Menu.js'
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated, name: state.name };
@@ -58,25 +59,12 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <Router history={ history }>
-            <Link className="App-link" to="/" > Home </Link>
-            { !this.props.authenticated &&
-              <div>
-                <br></br>
-                <Link className="App-link" to="/signup" > Sign Up </Link>
-                <br></br>
-                <Link className="App-link" to="/login" > Login </Link>
-              </div>
-            }
-            { this.props.authenticated &&
-              <div>
-                <br></br>
-                <input type="button" value="Logout" onClick={() => this.logout()}/>
-              </div>
-            }
-
+            <Menu authenticated={this.props.authenticated} logout={() => this.logout()} />
             <Switch>
               <Route exact path='/'>
-                <p onClick={() => this.wow() }>Hello {this.props.name}</p>
+                { this.props.authenticated &&
+                    <p onClick={() => this.wow() }>Hello {this.props.name}</p>
+                }
               </Route>
               { !this.props.authenticated &&
                   <Route path="/login">

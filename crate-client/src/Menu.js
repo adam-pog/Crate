@@ -17,6 +17,7 @@ const Menu = ({authenticated, logout}) => {
       }
       { authenticated &&
         <div>
+          <Link className="App-link" to="/budget" > Budget </Link>
           <br></br>
           <input type="button" value="Logout" onClick={() => logout()}/>
         </div>

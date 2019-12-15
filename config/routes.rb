@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   post 'test', to: 'sessions#test_post'
 
   # users
-  post 'user', to: 'users#create', as: :create_user
+  post 'user', to: 'users#create'
+
+  # budget
+  get 'budget', to: 'budget#show'
 end

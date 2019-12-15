@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import history from './config/history';
 import { setAuthenticated } from "./actions/index";
 import Menu from './Menu.js'
+import Budget from './budget/Budget.js'
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated, name: state.name };
@@ -21,19 +22,15 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
+const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    authenticated
+      ? <Component {...props} />
+      : <Redirect to='/login' />
+  )} />
+)
 
 class App extends React.Component {
-  wow() {
-    Fetch('http://localhost:3000/test', 'post')
-    .then(([status, _response]) => {
-      if(status === 200) {
-        console.log(`you're authenticated ${this.props.name}!`)
-      } else {
-        console.log('uh oh')
-      }
-    })
-  }
-
   logout() {
     Fetch('http://localhost:3000/logout', 'post')
     .then(([status, _response]) => {
@@ -46,14 +43,6 @@ class App extends React.Component {
     })
   }
 
-  // const PrivateRoute = ({ component: Component, ...rest }) => (
-  //   <Route {...rest} render={(props) => (
-  //     this.props.authenticated
-  //       ? <Component {...props} />
-  //       : <Redirect to='/login' />
-  //   )} />
-  // )
-
   render() {
     return (
       <div className="App">
@@ -62,9 +51,7 @@ class App extends React.Component {
             <Menu authenticated={this.props.authenticated} logout={() => this.logout()} />
             <Switch>
               <Route exact path='/'>
-                { this.props.authenticated &&
-                    <p onClick={() => this.wow() }>Hello {this.props.name}</p>
-                }
+                <p>Hello</p>
               </Route>
               { !this.props.authenticated &&
                   <Route path="/login">
@@ -76,6 +63,11 @@ class App extends React.Component {
                     <Signup />
                   </Route>
               }
+              <PrivateRoute
+                path='/budget'
+                component={Budget}
+                authenticated={this.props.authenticated}>
+              </PrivateRoute>
               <Route>
                 <Redirect to='/' />
               </Route>

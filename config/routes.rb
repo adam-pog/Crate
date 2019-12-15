@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 
   # budget
   get 'budget', to: 'budget#show'
+  post 'budget_category', to: 'budget#create_category'
 end

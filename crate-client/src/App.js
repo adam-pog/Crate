@@ -9,6 +9,7 @@ import history from './config/history';
 import { setAuthenticated } from "./actions/index";
 import Menu from './Menu.js'
 import Budget from './budget/Budget.js'
+import NewBudget from './budget/NewBudget.js'
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated, name: state.name };
@@ -66,6 +67,11 @@ class App extends React.Component {
               <PrivateRoute
                 path='/budget'
                 component={Budget}
+                authenticated={this.props.authenticated}>
+              </PrivateRoute>
+              <PrivateRoute
+                path='/new_budget'
+                component={NewBudget}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
               <Route>

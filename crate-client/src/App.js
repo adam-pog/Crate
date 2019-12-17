@@ -10,6 +10,7 @@ import { setAuthenticated } from "./actions/index";
 import Menu from './Menu.js'
 import Budget from './budget/Budget.js'
 import NewBudget from './budget/NewBudget.js'
+import Container from '@material-ui/core/Container';
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated, name: state.name };
@@ -46,13 +47,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <Router history={ history }>
+      <Container disableGutters={true}>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <Router history={ history }>
+          <header>
             <Menu authenticated={this.props.authenticated} logout={() => this.logout()} />
+          </header>
+          <Container className="Main">
             <Switch>
               <Route exact path='/'>
                 <p>Hello</p>
+                <p>Hello</p>
+                <p>Hello</p>
+                <p>Hello</p>
+
               </Route>
               { !this.props.authenticated &&
                   <Route path="/login">
@@ -78,9 +87,9 @@ class App extends React.Component {
                 <Redirect to='/' />
               </Route>
             </Switch>
-          </Router>
-        </header>
-      </div>
+          </Container>
+        </Router>
+      </Container>
     )
   }
 }

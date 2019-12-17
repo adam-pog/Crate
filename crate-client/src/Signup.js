@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './Signup.css';
 import { Fetch } from './FetchHelper.js'
 import history from './config/history'
@@ -48,7 +47,6 @@ class Signup extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Sign Up
           </p>

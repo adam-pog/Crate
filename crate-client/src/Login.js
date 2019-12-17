@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './Login.css';
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
@@ -47,7 +46,6 @@ class Login extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Login
           </p>

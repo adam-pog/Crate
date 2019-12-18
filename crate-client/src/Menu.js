@@ -6,12 +6,22 @@ import { makeStyles } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import HomeIcon from '@material-ui/icons/Home';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   link: {
     color: theme.palette.primary.contrastText,
+    margin: theme.spacing(1)
+  },
+  icon: {
+    color: theme.palette.primary.contrastText,
+    margin: theme.spacing(0, 3, 0, 0)
+  },
+  logout: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.dark
+    },
     margin: theme.spacing(1)
   },
   home: {
@@ -26,8 +36,8 @@ const Menu = ({authenticated, logout}) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <div className={classes.home}>
-          <Link to="/" component={RouterLink} className={classes.link}>
+        <Grid container alignItems="center" className={classes.home}>
+          <Link to="/" component={RouterLink} className={classes.icon}>
             <HomeIcon />
           </Link>
           {
@@ -36,11 +46,11 @@ const Menu = ({authenticated, logout}) => {
               Budget
             </Link>
           }
-        </div>
+        </Grid>
 
         {
           !authenticated &&
-          <Box>
+          <Grid xs={1}>
             <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
               Signup
             </Link>
@@ -48,11 +58,11 @@ const Menu = ({authenticated, logout}) => {
             <Link variant="button" className={classes.link} to="/login" component={RouterLink}>
               Log In
             </Link>
-          </Box>
+          </Grid>
         }
         {
           authenticated &&
-          <Button className={classes.link} onClick={() => logout()}>
+          <Button variant="outlined" className={classes.logout} onClick={ () => logout()  } >
             Logout
           </Button>
         }

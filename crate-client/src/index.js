@@ -7,23 +7,21 @@ import store from "./config/configureStore";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-  typography: {
-    "fontFamily": "Roboto"
-  },
   palette: {
+    type: 'dark',
     primary: {
-      light: '#337f83',
-      main: '#006064',
-      dark: '#004346',
+      light: '#4dabf5',
+      main: '#2196f3',
+      dark: '#1769aa',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#337f83',
-      main: '#006064',
-      dark: '#004346',
-      contrastText: '#000',
-    },
-  },
+      light: '#f73378',
+      main: '#f50057',
+      dark: '#ab003c',
+      contrastText: '#fff',
+    }
+  }
 });
 
 

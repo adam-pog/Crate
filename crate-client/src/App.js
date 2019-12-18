@@ -11,6 +11,7 @@ import Menu from './Menu.js'
 import Budget from './budget/Budget.js'
 import NewBudget from './budget/NewBudget.js'
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const mapStateToProps = state => {
   return { authenticated: state.authenticated, name: state.name };
@@ -57,11 +58,18 @@ class App extends React.Component {
           <Grid container className="Main">
             <Switch>
               <Route exact path='/'>
-                <p>Hello</p>
-                <p>Hello</p>
-                <p>Hello</p>
-                <p>Hello</p>
-
+              <Grid container justify="center" alignItems="center">
+                <Typography component="h1" variant="h1" color='textPrimary'>
+                  {
+                    this.props.authenticated &&
+                    `Welcome, ${this.props.name}!`
+                  }
+                  {
+                    !this.props.authenticated &&
+                    "Hello"
+                  }
+                </Typography>
+              </Grid>
               </Route>
               { !this.props.authenticated &&
                   <Route path="/login">
@@ -84,7 +92,7 @@ class App extends React.Component {
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
               <Route>
-                <Redirect to='/' />
+                <Redirect to='/login' />
               </Route>
             </Switch>
           </Grid>

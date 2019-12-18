@@ -5,10 +5,11 @@ import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
 import history from './config/history'
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import LockIcon from '@material-ui/icons/Lock';
+import Avatar from '@material-ui/core/Avatar';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -19,9 +20,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 const styles = theme => ({
-  typography: {
-    color: theme.palette.primary.contrastText
-  },
   login: {
     marginBottom: theme.spacing(20),
     display: 'flex',
@@ -37,8 +35,9 @@ const styles = theme => ({
   input: {
     margin: theme.spacing(2, 0)
   },
-  textField: {
-    background: theme.palette.primary.contrastText
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
   }
 });
 
@@ -75,25 +74,23 @@ class Login extends React.Component {
 
     return (
       <Grid container justify="center" alignItems="center" className={classes.login}>
-        <Typography component="h1" variant="h4" className={classes.typography}>
-          Login
-        </Typography>
+        <Avatar className={classes.avatar}>
+          <LockIcon className={classes.icon} />
+        </Avatar>
         <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
           <Grid container className={classes.input}>
             <TextField
-              className={classes.textField}
-              variant="filled"
+              label="Email"
+              variant="outlined"
               name="email"
-              placeholder="Email"
               onChange={(e) => this.handleFieldChange(e)}
             />
           </Grid>
           <Grid container className={classes.input}>
             <TextField
-              className={classes.textField}
-              variant="filled"
+              variant="outlined"
+              label="Password"
               name="password"
-              placeholder="Pasword"
               type="password"
               onChange={(e) => this.handleFieldChange(e)}
             />

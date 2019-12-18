@@ -4,6 +4,7 @@ import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
 import history from './config/history'
+import Grid from '@material-ui/core/Grid';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -44,12 +45,10 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Login
-          </p>
-        </header>
+      <Grid container justify="center" alignItems="center">
+        <p>
+          Login
+        </p>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
             name="email"
@@ -64,7 +63,7 @@ class Login extends React.Component {
           />
           <input type="submit" value="Submit"/>
         </form>
-      </div>
+      </Grid>
     )
   }
 }

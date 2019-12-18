@@ -2,6 +2,7 @@ import React from 'react';
 import './Budget.css';
 import { Fetch } from '../FetchHelper.js'
 import { Link } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid';
 
 class Budget extends React.Component {
   state = {
@@ -36,7 +37,7 @@ class Budget extends React.Component {
 
   render() {
     return (
-      <div>
+      <Grid container justify="center" alignItems="center">
         <header className="App-header">
           <p>
             Budget
@@ -48,7 +49,7 @@ class Budget extends React.Component {
           <Link className="App-link" to="/new_budget" > New Budget </Link> :
           this.listCategories()
         }
-      </div>
+      </Grid>
     )
   }
 }

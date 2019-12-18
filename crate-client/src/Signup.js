@@ -2,7 +2,7 @@ import React from 'react';
 import './Signup.css';
 import { Fetch } from './FetchHelper.js'
 import history from './config/history'
-
+import Grid from '@material-ui/core/Grid';
 
 class Signup extends React.Component {
   state = {
@@ -45,12 +45,10 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Sign Up
-          </p>
-        </header>
+      <Grid container justify="center" alignItems="center">
+        <p>
+          Sign Up
+        </p>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
             name="name"
@@ -76,7 +74,7 @@ class Signup extends React.Component {
           />
           <input type="submit" value="Submit"/>
         </form>
-      </div>
+      </Grid>
     )
   }
 }

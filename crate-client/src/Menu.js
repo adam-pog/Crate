@@ -5,9 +5,9 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Badge from '@material-ui/core/Badge';
 import HomeIcon from '@material-ui/icons/Home';
-
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -30,15 +30,32 @@ const Menu = ({authenticated, logout}) => {
           <Link to="/" component={RouterLink} className={classes.link}>
             <HomeIcon />
           </Link>
+          {
+            authenticated &&
+            <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
+              Budget
+            </Link>
+          }
         </div>
 
-        <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
-          Signup
-        </Link>
-        /
-        <Link variant="button" className={classes.link}  to="/login" component={RouterLink}>
-          Log In
-        </Link>
+        {
+          !authenticated &&
+          <Box>
+            <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
+              Signup
+            </Link>
+            /
+            <Link variant="button" className={classes.link} to="/login" component={RouterLink}>
+              Log In
+            </Link>
+          </Box>
+        }
+        {
+          authenticated &&
+          <Button className={classes.link} onClick={() => logout()}>
+            Logout
+          </Button>
+        }
       </Toolbar>
     </AppBar>
 

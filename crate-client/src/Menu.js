@@ -50,19 +50,23 @@ const Menu = ({authenticated, logout}) => {
 
         {
           !authenticated &&
-          <Grid xs={1}>
-            <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
-              Signup
-            </Link>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
+                Signup
+              </Link>
+            </Grid>
             /
-            <Link variant="button" className={classes.link} to="/login" component={RouterLink}>
-              Log In
-            </Link>
+            <Grid item>
+              <Link variant="button" className={classes.link} to="/login" component={RouterLink}>
+                Log In
+              </Link>
+            </Grid>
           </Grid>
         }
         {
           authenticated &&
-          <Button variant="outlined" className={classes.logout} onClick={ () => logout()  } >
+          <Button variant="outlined" className={classes.logout} onClick={ () => logout() } >
             Logout
           </Button>
         }

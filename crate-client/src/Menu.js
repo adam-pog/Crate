@@ -53,7 +53,7 @@ const Menu = ({authenticated, logout}) => {
           <Grid container justify="flex-end">
             <Grid item>
               <Link variant="button" className={classes.link} to="/signup" component={RouterLink}>
-                Signup
+                Sign up
               </Link>
             </Grid>
             /

@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import LockIcon from '@material-ui/icons/Lock';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 
 const mapDispatchToProps = dispatch => {
@@ -73,9 +73,14 @@ class Login extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid container justify="center" alignItems="center" className={classes.login}>
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.login}
+      >
         <Avatar className={classes.avatar}>
-          <LockIcon className={classes.icon} />
+          <LockOutlinedIcon className={classes.icon} />
         </Avatar>
         <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
           <Grid container className={classes.input}>
@@ -95,7 +100,12 @@ class Login extends React.Component {
               onChange={(e) => this.handleFieldChange(e)}
             />
           </Grid>
-          <Grid container justify="center" alignItems="center" className={classes.submit}>
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            className={classes.submit}
+          >
             <Button
               fullWidth
               type="submit"

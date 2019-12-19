@@ -6,7 +6,6 @@ import history from '../config/history'
 class NewBudget extends React.Component {
   state = {
     label: '',
-    source: '',
     monthly_amount: 0
   }
 
@@ -45,11 +44,6 @@ class NewBudget extends React.Component {
           <input
             name="label"
             placeholder="Label"
-            onChange={(e) => this.handleFieldChange(e)}
-          />
-          <input
-            name="source"
-            placeholder="Source"
             onChange={(e) => this.handleFieldChange(e)}
           />
           <input

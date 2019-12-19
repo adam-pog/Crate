@@ -25,8 +25,4 @@ class SessionsController < ApplicationController
   def test_post
     render json: {}, status: :ok
   end
-
-  def not_authenticated
-    render json: {}, status: :unauthorized
-  end
 end

@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 2019_12_05_020013) do
 
   create_table "budget_categories", force: :cascade do |t|
     t.string "label", null: false
-    t.string "source", null: false
     t.bigint "user_id", null: false
     t.integer "monthly_amount", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -27,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_020013) do
 
   create_table "transactions", force: :cascade do |t|
     t.float "amount", null: false
+    t.string "source", null: false
     t.bigint "budget_category_id", null: false
     t.text "description", null: false
     t.datetime "created_at", precision: 6, null: false

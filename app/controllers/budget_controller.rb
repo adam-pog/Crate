@@ -18,6 +18,6 @@ class BudgetController < ApplicationController
   private
 
   def budget_category_params
-    params.require(:budget_category).permit(:label, :source, :monthly_amount)
+    params.require(:budget_category).permit(:label, :monthly_amount)
   end
 end

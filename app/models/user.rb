@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   def budget_categories_for_display
     budget_categories
-    .select(:label, :source, :monthly_amount)
+    .select(:label, :monthly_amount)
     .as_json(except: :id)
   end
 end

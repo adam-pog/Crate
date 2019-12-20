@@ -46,6 +46,13 @@ const Menu = ({authenticated, logout}) => {
               Budget
             </Link>
           }
+          |
+          {
+            authenticated &&
+            <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
+              Transactions
+            </Link>
+          }
         </Grid>
 
         {

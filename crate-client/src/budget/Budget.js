@@ -100,7 +100,7 @@ class Budget extends React.Component {
           <Grid>
             <Grid item >
               <Typography component='h1' variant="h4" color='textPrimary'>
-                Income: { this.state.income }
+                Monthly: { this.state.income }
               </Typography>
               <Typography component='h1' variant="h4" color='textPrimary'>
                 Remaining: { this.state.remaining }

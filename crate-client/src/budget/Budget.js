@@ -182,14 +182,3 @@ class Budget extends React.Component {
 }
 
 export default withStyles(styles)(Budget);
-
-// <Grid
-//   container
-//   justify="flex-end"
-//   alignItems="flex-end"
-// >
-  // <Avatar className={classes.avatar}>
-  //   <EditIcon className={classes.icon} />
-  // </Avatar>
-// </Grid>
-//

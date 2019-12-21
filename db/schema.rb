@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_020013) do
+ActiveRecord::Schema.define(version: 2019_12_21_224159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_020013) do
     t.integer "monthly_amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["label"], name: "index_budget_categories_on_label", unique: true
     t.index ["user_id"], name: "index_budget_categories_on_user_id"
   end
 

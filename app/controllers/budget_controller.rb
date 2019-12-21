@@ -9,8 +9,8 @@ class BudgetController < ApplicationController
   end
 
   def create_category
-    category = current_user.budget_categories.create(budget_category_params)
-    status = category ? :ok : :bad_request
+    category = current_user.budget_categories.build(budget_category_params)
+    status = category.save ? :ok : :bad_request
 
     render json: {}, status: status
   end

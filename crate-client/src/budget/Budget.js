@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
-import EditIcon from '@material-ui/icons/Edit';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   budget: {
@@ -24,14 +24,15 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   card: {
-    width: 700,
+    width: 750,
     height: 60,
     margin: theme.spacing(1.5),
     backgroundColor: '#393F4A'
   },
   cardContent: {
     textAlign: 'start',
-    paddingTop: 5
+    paddingTop: 5,
+    paddingRight: 0
   },
   progress: {
     margin: theme.spacing(1, 0),
@@ -45,6 +46,20 @@ const styles = theme => ({
   },
   progressAmount: {
     color: '#00e676'
+  },
+  arrow: {
+    color: theme.palette.primary.light
+  },
+  arrowGrid: {
+    margin: theme.spacing(0, 1, 0, 1),
+    paddingRight: 0
+  },
+  arrowLink: {
+    height: '24px',
+    width: '24px'
+  },
+  mainBudgetInfoGrid: {
+    margin: theme.spacing(0, 1),
   }
 });
 
@@ -86,27 +101,44 @@ class Budget extends React.Component {
       return (
         <Card key={category.label} className={this.props.classes.card} raised={true}>
           <CardContent className={this.props.classes.cardContent}>
-            <Grid container direction='row' alignItems='center'>
-              <Grid className={this.props.classes.primaryAmount}>
-                <Typography component='h1' variant='h6' color='textPrimary'>
-                  {category.label}
-                </Typography>
-              </Grid>
-              <Grid >
-                <Typography component='h1' variant='h6' color='textPrimary'>
-                  ${category.monthly_amount}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container>
+            <Grid container direction='row'>
               <Box className={this.props.classes.progressBox}>
-                <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress}/>
+                <Grid className={this.props.classes.mainBudgetInfoGrid}>
+                  <Grid container direction='row' alignItems='center'>
+                    <Grid className={this.props.classes.primaryAmount}>
+                      <Typography component='h1' variant='h6' color='textPrimary'>
+                        {category.label}
+                      </Typography>
+                    </Grid>
+                    <Grid>
+                      <Typography component='h1' variant='h6' color='textPrimary'>
+                        ${category.monthly_amount}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Box className={this.props.classes.progressBox}>
+                      <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress}/>
+                    </Box>
+                    <Typography component='p' className={this.props.classes.progressAmount} >
+                      ${category.monthly_amount}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Box>
-              <Typography component='p' className={this.props.classes.progressAmount} >
-                ${category.monthly_amount}
-              </Typography>
+
+              <Grid className={this.props.classes.arrowGrid}>
+                <IconButton variant="outlined" className={this.props.classes.arrowButton}>
+                  <Link to="/" className={this.props.classes.arrowLink}>
+                    <ArrowForwardIosIcon  className={this.props.classes.arrow}/>
+                  </Link>
+                </IconButton>
+              </Grid>
+
             </Grid>
           </CardContent>
+
+
         </Card>
       )
     })

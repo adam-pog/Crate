@@ -4,7 +4,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       t.float :amount, null: false
       t.string :source, null: false
       t.datetime :date, null: false
-      t.boolean :static, null: false, default: false
+      t.boolean :recurring, null: false, default: false
       t.belongs_to :budget_category, foreign_key: true, null: false
       t.text :description, null: false
 

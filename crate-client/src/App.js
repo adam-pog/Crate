@@ -9,7 +9,7 @@ import history from './config/history';
 import { setAuthenticated } from "./actions/index";
 import Menu from './Menu.js'
 import Budget from './budget/Budget.js'
-import NewBudget from './budget/NewBudget.js'
+import NewBudgetCategory from './budget/NewBudgetCategory.js'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -88,7 +88,7 @@ class App extends React.Component {
               </PrivateRoute>
               <PrivateRoute
                 path='/new_budget'
-                component={NewBudget}
+                component={NewBudgetCategory}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
               <Route>

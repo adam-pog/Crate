@@ -42,16 +42,15 @@ const Menu = ({authenticated, logout}) => {
           </Link>
           {
             authenticated &&
-            <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
-              Budget
-            </Link>
-          }
-          |
-          {
-            authenticated &&
-            <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
-              Transactions
-            </Link>
+            <Grid>
+              <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
+                Budget
+              </Link>
+              |
+              <Link variant="button" className={classes.link} to="/budget" component={RouterLink}>
+                Transactions
+              </Link>
+            </Grid>
           }
         </Grid>
 

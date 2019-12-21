@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_020013) do
     t.float "amount", null: false
     t.string "source", null: false
     t.datetime "date", null: false
-    t.boolean "static", default: false, null: false
+    t.boolean "recurring", default: false, null: false
     t.bigint "budget_category_id", null: false
     t.text "description", null: false
     t.datetime "created_at", precision: 6, null: false

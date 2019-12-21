@@ -1,9 +1,9 @@
 import React from 'react';
-import './NewBudget.css';
+import './NewBudgetCategory.css';
 import { Fetch } from '../FetchHelper.js'
 import history from '../config/history'
 
-class NewBudget extends React.Component {
+class NewBudgetCategory extends React.Component {
   state = {
     label: '',
     monthly_amount: 0
@@ -37,7 +37,7 @@ class NewBudget extends React.Component {
       <div className="App">
         <header className="App-header">
           <p>
-            New budget
+            New budget Category
           </p>
         </header>
         <form onSubmit={(e) => this.handleSubmit(e)}>
@@ -58,4 +58,4 @@ class NewBudget extends React.Component {
   }
 }
 
-export default NewBudget;
+export default NewBudgetCategory;

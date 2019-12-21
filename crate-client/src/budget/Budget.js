@@ -6,10 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
+import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -20,19 +20,31 @@ const styles = theme => ({
     textAlign: 'center'
   },
   avatar: {
-    margin: theme.spacing(0.5, 1, 0, 0),
-    backgroundColor: theme.palette.secondary.main,
-    width: theme.spacing(3),
-    height: theme.spacing(3)
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.main
   },
   card: {
     width: 700,
     height: 60,
-    margin: theme.spacing(1),
+    margin: theme.spacing(1.5),
     backgroundColor: '#393F4A'
   },
   cardContent: {
-    textAlign: 'start'
+    textAlign: 'start',
+    paddingTop: 5
+  },
+  progress: {
+    margin: theme.spacing(1, 0),
+    width: 550
+  },
+  primaryAmount: {
+    flex: 1
+  },
+  progressBox: {
+    flex: 1
+  },
+  progressAmount: {
+    color: '#00e676'
   }
 });
 
@@ -73,15 +85,28 @@ class Budget extends React.Component {
     return this.state.categories.map((category) => {
       return (
         <Card key={category.label} className={this.props.classes.card} raised={true}>
-          <Grid>
-              <CardContent className={this.props.classes.cardContent}>
+          <CardContent className={this.props.classes.cardContent}>
+            <Grid container direction='row' alignItems='center'>
+              <Grid className={this.props.classes.primaryAmount}>
                 <Typography component='h1' variant='h6' color='textPrimary'>
-                  {category.label}: {category.monthly_amount} of {category.monthly_amount}
+                  {category.label}
                 </Typography>
-                <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress} />
-
-              </CardContent>
-          </Grid>
+              </Grid>
+              <Grid >
+                <Typography component='h1' variant='h6' color='textPrimary'>
+                  ${category.monthly_amount}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Box className={this.props.classes.progressBox}>
+                <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress}/>
+              </Box>
+              <Typography component='p' className={this.props.classes.progressAmount} >
+                ${category.monthly_amount}
+              </Typography>
+            </Grid>
+          </CardContent>
         </Card>
       )
     })
@@ -100,10 +125,10 @@ class Budget extends React.Component {
           <Grid>
             <Grid item >
               <Typography component='h1' variant="h4" color='textPrimary'>
-                Monthly: { this.state.income }
+                Monthly: ${ this.state.income }
               </Typography>
               <Typography component='h1' variant="h4" color='textPrimary'>
-                Remaining: { this.state.remaining }
+                Remaining: ${ this.state.remaining }
               </Typography>
             </Grid>
             <Grid item >
@@ -111,8 +136,12 @@ class Budget extends React.Component {
                 this.listCategories(classes)
               }
             </Grid>
-            <Grid item >
-              <Link to="/new_budget" > New Category </Link>
+            <Grid container justify='center'>
+              <Link to="/new_budget" >
+                <Avatar className={classes.avatar}>
+                  <AddIcon fontSize='large' />
+                </Avatar>
+              </Link>
             </Grid>
           </Grid>
       </Grid>
@@ -127,8 +156,8 @@ export default withStyles(styles)(Budget);
 //   justify="flex-end"
 //   alignItems="flex-end"
 // >
-//   <Avatar className={classes.avatar}>
-//     <EditIcon className={classes.icon} />
-//   </Avatar>
+  // <Avatar className={classes.avatar}>
+  //   <EditIcon className={classes.icon} />
+  // </Avatar>
 // </Grid>
 //

@@ -97,11 +97,11 @@ class BudgetCategory extends React.Component {
             </Box>
 
             <Grid className={this.props.classes.arrowGrid}>
-              <IconButton variant="outlined" className={this.props.classes.arrowButton}>
                 <Link to="/" className={this.props.classes.arrowLink}>
-                  <ArrowForwardIosIcon  className={this.props.classes.arrow}/>
+                  <IconButton variant="outlined" className={this.props.classes.arrowButton}>
+                    <ArrowForwardIosIcon  className={this.props.classes.arrow}/>
+                  </IconButton>
                 </Link>
-              </IconButton>
             </Grid>
 
           </Grid>

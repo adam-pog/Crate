@@ -53,6 +53,11 @@ class BudgetCategory extends React.Component {
     })
   }
 
+  progress() {
+    const remaining = this.state.monthly_amount - this.state.spent
+    return (remaining / this.state.monthly_amount) * 100
+  }
+
   category() {
     return (
       <Card key={this.state.label} className={this.props.classes.card} raised={true}>
@@ -80,7 +85,11 @@ class BudgetCategory extends React.Component {
 
                 <Grid container>
                   <Box className={this.props.classes.progressBox}>
-                    <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress}/>
+                    <ColorLinearProgress
+                      variant="determinate"
+                      value={this.progress()}
+                      className={this.props.classes.progress}
+                    />
                   </Box>
                   <Typography component='p' className={this.props.classes.progressAmount} >
                     ${this.state.spent}

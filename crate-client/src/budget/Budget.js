@@ -13,55 +13,7 @@ import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import IconButton from '@material-ui/core/IconButton';
-
-const styles = theme => ({
-  budget: {
-    padding: theme.spacing(5),
-    textAlign: 'center'
-  },
-  avatar: {
-    margin: theme.spacing(2),
-    backgroundColor: theme.palette.secondary.main
-  },
-  card: {
-    width: 750,
-    height: 60,
-    margin: theme.spacing(1.5),
-    backgroundColor: '#393F4A'
-  },
-  cardContent: {
-    textAlign: 'start',
-    paddingTop: 5,
-    paddingRight: 0
-  },
-  progress: {
-    margin: theme.spacing(1, 0),
-    width: 550
-  },
-  primaryAmount: {
-    flex: 1
-  },
-  progressBox: {
-    flex: 1
-  },
-  progressAmount: {
-    color: '#00e676'
-  },
-  arrow: {
-    color: theme.palette.primary.light
-  },
-  arrowGrid: {
-    margin: theme.spacing(0, 1, 0, 1),
-    paddingRight: 0
-  },
-  arrowLink: {
-    height: '24px',
-    width: '24px'
-  },
-  mainBudgetInfoGrid: {
-    margin: theme.spacing(0, 1),
-  }
-});
+import Styles from './BudgetStyles'
 
 const ColorLinearProgress = withStyles({
 
@@ -129,7 +81,7 @@ class Budget extends React.Component {
 
               <Grid className={this.props.classes.arrowGrid}>
                 <IconButton variant="outlined" className={this.props.classes.arrowButton}>
-                  <Link to="/" className={this.props.classes.arrowLink}>
+                  <Link to={`/budget_category/${category.id}`} className={this.props.classes.arrowLink}>
                     <ArrowForwardIosIcon  className={this.props.classes.arrow}/>
                   </Link>
                 </IconButton>
@@ -181,4 +133,4 @@ class Budget extends React.Component {
   }
 }
 
-export default withStyles(styles)(Budget);
+export default withStyles(Styles)(Budget);

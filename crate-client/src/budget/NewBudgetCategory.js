@@ -13,7 +13,7 @@ class NewBudgetCategory extends React.Component {
     e.preventDefault();
 
     Fetch(
-      'http://localhost:3000/budget_category',
+      'http://localhost:3000/budget_categories',
       'post',
       JSON.stringify({budget_category: this.state})
     )

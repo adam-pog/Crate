@@ -9,8 +9,10 @@ Rails.application.routes.draw do
 
   # users
   post '/user', to: 'users#create'
+  put  '/user', to: 'users#update'
 
   # budget
   get '/budget', to: 'budget#show'
-  post '/budget_category', to: 'budget#create_category'
+  post '/budget_categories', to: 'budget#create_category'
+  get '/budget_categories/:id', to: 'budget#show_category'
 end

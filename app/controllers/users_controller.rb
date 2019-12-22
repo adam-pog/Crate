@@ -12,9 +12,19 @@ class UsersController < ApplicationController
     render json: {}, status: status
   end
 
+  def update
+    status = current_user.update(update_params) ? :ok : :bad_request
+
+    render json: {}, status: status
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def update_params
+    params.require(:user).permit(:income)
   end
 end

@@ -7,10 +7,4 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   has_many :budget_categories
-
-  def budget_categories_for_display
-    budget_categories
-    .select(:id, :label, :monthly_amount)
-    .as_json
-  end
 end

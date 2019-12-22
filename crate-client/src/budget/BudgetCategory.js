@@ -95,15 +95,6 @@ class BudgetCategory extends React.Component {
 
               </Grid>
             </Box>
-
-            <Grid className={this.props.classes.arrowGrid}>
-                <Link to="/" className={this.props.classes.arrowLink}>
-                  <IconButton variant="outlined" className={this.props.classes.arrowButton}>
-                    <ArrowForwardIosIcon  className={this.props.classes.arrow}/>
-                  </IconButton>
-                </Link>
-            </Grid>
-
           </Grid>
         </CardContent>
       </Card>
@@ -113,9 +104,20 @@ class BudgetCategory extends React.Component {
   transactions() {
     return this.state.transactions.map((transaction) => {
       return (
-        <Typography key={transaction.id} component='h1' variant='h6' color='textPrimary'>
-          {transaction.description} - {transaction.amount}
-        </Typography>
+        <Card key={transaction.id} className={this.props.classes.transactionCard} raised={true}>
+          <Card className={this.props.classes.cardHeader}>
+            <Typography component='h1' variant='h6' color='textPrimary' className={this.props.classes.cardHeaderText}>
+              {transaction.date}
+            </Typography>
+          </Card>
+
+          <Typography component='h1' variant='h6' color='textPrimary'>
+            {transaction.description} - {transaction.amount}
+          </Typography>
+          <Typography component='h1' variant='h6' color='textPrimary'>
+            {transaction.source}
+          </Typography>
+        </Card>
       )
     })
   }

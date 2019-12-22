@@ -27,7 +27,7 @@ const styles = theme => ({
     alignItems: 'center',
   },
   form: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(2, 0),
@@ -36,7 +36,6 @@ const styles = theme => ({
     margin: theme.spacing(2, 0)
   },
   avatar: {
-    margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   }
 });

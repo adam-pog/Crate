@@ -13,6 +13,19 @@ const Styles = theme => ({
     margin: theme.spacing(1.5),
     backgroundColor: '#393F4A'
   },
+  transactionCard: {
+    width: 750,
+    height: 150,
+    margin: theme.spacing(1.5),
+    backgroundColor: '#393F4A'
+  },
+  cardHeader: {
+    textAlign: 'start',
+    backgroundColor: theme.palette.primary.dark
+  },
+  cardHeaderText: {
+    margin: theme.spacing(0, 0, 0, 1),
+  },
   cardContent: {
     textAlign: 'start',
     paddingTop: 5,

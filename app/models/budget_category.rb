@@ -25,16 +25,9 @@ class BudgetCategory < ApplicationRecord
   def details_for_display
     as_json(only: [:id, :label, :monthly_amount])
     .merge({
-      transactions: transaction_details,
+      transactions: transactions.map(&:details_for_display),
       spent: spent,
       progress: progress
     })
-  end
-
-  private
-
-  def transaction_details
-    transactions
-    .as_json(only: [:id, :amount, :source, :recurring, :date, :description])
   end
 end

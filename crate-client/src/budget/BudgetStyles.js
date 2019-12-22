@@ -3,9 +3,14 @@ const Styles = theme => ({
     padding: theme.spacing(5),
     textAlign: 'center'
   },
-  avatar: {
-    margin: theme.spacing(2),
-    backgroundColor: theme.palette.secondary.main
+  addButton: {
+    backgroundColor: theme.palette.secondary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.dark
+    }
+  },
+  addIcon: {
+    color: '#282c34'
   },
   card: {
     width: 750,

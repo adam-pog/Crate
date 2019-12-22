@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
@@ -123,9 +122,9 @@ class Budget extends React.Component {
             </Grid>
             <Grid container justify='center'>
               <Link to="/new_budget" >
-                <Avatar className={classes.avatar}>
-                  <AddIcon fontSize='large' />
-                </Avatar>
+                <IconButton className={classes.addButton} size='small'>
+                  <AddIcon fontSize='large' className={classes.addIcon} />
+                </IconButton>
               </Link>
             </Grid>
           </Grid>

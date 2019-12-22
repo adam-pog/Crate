@@ -2,10 +2,15 @@ class BudgetController < ApplicationController
   def show
     categories = current_user
       .budget_categories
-      .select(:id, :label, :monthly_amount)
-      .as_json
+      .with_amount_spent
 
-    payload = { income: current_user.income, categories: categories }
+    payload = {
+      income: current_user.income,
+      remaining: current_user.income - categories.sum(&:spent),
+      categories: categories.as_json(
+        only: [:id, :label, :monthly_amount, :spent, :progress]
+      )
+    }
 
     render json: payload, status: :ok
   end
@@ -23,7 +28,7 @@ class BudgetController < ApplicationController
   def show_category
     category = current_user
       .budget_categories
-      .with_transactions
+      .with_amount_spent
       .find(params[:id])
 
     render json: {}, status: :unauthorized if category.user != current_user

@@ -27,6 +27,7 @@ class BudgetCategory extends React.Component {
     label: '',
     monthly_amount: 0,
     spent: 0,
+    progress: 0,
     transactions: []
   }
 
@@ -45,17 +46,13 @@ class BudgetCategory extends React.Component {
           label: response.label,
           monthly_amount: response.monthly_amount,
           transactions: response.transactions,
-          spent: response.spent
+          spent: response.spent,
+          progress: response.progress
         })
       } else {
         console.log('uh oh')
       }
     })
-  }
-
-  progress() {
-    const remaining = this.state.monthly_amount - this.state.spent
-    return (remaining / this.state.monthly_amount) * 100
   }
 
   category() {
@@ -87,7 +84,7 @@ class BudgetCategory extends React.Component {
                   <Box className={this.props.classes.progressBox}>
                     <ColorLinearProgress
                       variant="determinate"
-                      value={this.progress()}
+                      value={this.state.progress}
                       className={this.props.classes.progress}
                     />
                   </Box>

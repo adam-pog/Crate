@@ -40,6 +40,7 @@ class Budget extends React.Component {
       if(status === 200) {
         this.setState({
           income: response.income,
+          remaining: response.remaining,
           categories: response.categories
         })
       } else {
@@ -70,10 +71,10 @@ class Budget extends React.Component {
                   </Grid>
                   <Grid container>
                     <Box className={this.props.classes.progressBox}>
-                      <ColorLinearProgress variant="determinate" value={80} className={this.props.classes.progress}/>
+                      <ColorLinearProgress variant="determinate" value={category.progress} className={this.props.classes.progress}/>
                     </Box>
                     <Typography component='p' className={this.props.classes.progressAmount} >
-                      ${category.monthly_amount}
+                      ${category.spent}
                     </Typography>
                   </Grid>
                 </Grid>

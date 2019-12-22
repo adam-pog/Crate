@@ -3,6 +3,21 @@ class BudgetCategory < ApplicationRecord
   validates :label, uniqueness: true
 
   scope :with_transactions, -> { includes(:transactions) }
+  scope :with_amount_spent, -> do
+    with_transactions
+    .joins('LEFT JOIN transactions
+            ON transactions.budget_category_id = budget_categories.id')
+      .select('
+        budget_categories.*,
+        COALESCE(SUM(transactions.amount), 0) AS spent,
+        COALESCE(
+          (
+            (monthly_amount - sum(transactions.amount)) / monthly_amount) * 100,
+            0
+          ) as progress
+        ')
+      .group(:id)
+  end
 
   has_many :transactions
   belongs_to :user
@@ -11,7 +26,8 @@ class BudgetCategory < ApplicationRecord
     as_json(only: [:id, :label, :monthly_amount])
     .merge({
       transactions: transaction_details,
-      spent: spent
+      spent: spent,
+      progress: progress
     })
   end
 
@@ -20,9 +36,5 @@ class BudgetCategory < ApplicationRecord
   def transaction_details
     transactions
     .as_json(only: [:id, :amount, :source, :recurring, :date, :description])
-  end
-
-  def spent
-    transactions.sum(&:amount)
   end
 end

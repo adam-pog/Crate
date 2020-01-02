@@ -7,7 +7,8 @@ const Styles = theme => ({
     backgroundColor: theme.palette.secondary.main,
     "&:hover": {
       backgroundColor: theme.palette.secondary.dark
-    }
+    },
+    marginTop: 20
   },
   addIcon: {
     color: '#282c34'
@@ -25,7 +26,7 @@ const Styles = theme => ({
   },
   progress: {
     margin: theme.spacing(1, 0),
-    width: 550
+    width: 590
   },
   primaryAmount: {
     flex: 1

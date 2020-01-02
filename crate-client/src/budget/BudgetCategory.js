@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import AddIcon from '@material-ui/icons/Add';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
@@ -131,13 +133,24 @@ class BudgetCategory extends React.Component {
         justify="center"
         >
           <Grid>
-            <Grid item >
-              <Typography component='h1' variant="h4" color='textPrimary'>
-                Monthly: ${ this.state.monthly_amount }
-              </Typography>
-              <Typography component='h1' variant="h4" color='textPrimary'>
-                Remaining: ${ this.state.monthly_amount - this.state.spent }
-              </Typography>
+            <Grid container direction='row' alignItems='center'>
+              <Grid container item xs={4}>
+                <Link to="/budget" >
+                  <IconButton className={classes.backButton} size='small'>
+                    <ArrowBackIcon fontSize='large' className={classes.backIcon} />
+                  </IconButton>
+                </Link>
+              </Grid>
+              <Grid container item xs={8}>
+                <Grid item>
+                  <Typography component='h1' variant="h4" color='textPrimary'>
+                    Monthly: ${ this.state.monthly_amount }
+                  </Typography>
+                  <Typography component='h1' variant="h4" color='textPrimary'>
+                    Remaining: ${ this.state.monthly_amount - this.state.spent }
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item >
               {

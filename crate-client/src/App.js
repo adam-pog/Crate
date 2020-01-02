@@ -97,9 +97,16 @@ class App extends React.Component {
                 component={BudgetCategory}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
-              <Route>
-                <Redirect to='/login' />
-              </Route>
+              {!this.props.authenticated &&
+                <Route>
+                  <Redirect to='/login' />
+                </Route>
+              }
+              {this.props.authenticated &&
+                <Route>
+                  <Redirect to='/' />
+                </Route>
+              }
             </Switch>
           </Grid>
         </Router>

@@ -9,6 +9,18 @@ const Styles = theme => ({
       backgroundColor: theme.palette.secondary.dark
     }
   },
+  backButton: {
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.dark,
+    },
+    "&:hover $backIcon": {
+      color: '#282c34'
+    },
+    marginLeft: 10
+  },
+  backIcon: {
+    color: theme.palette.secondary.main
+  },
   addIcon: {
     color: '#282c34'
   },

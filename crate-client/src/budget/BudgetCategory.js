@@ -36,8 +36,7 @@ class BudgetCategory extends React.Component {
   }
 
   getTransactions() {
-    const id = this.props.match.params.id
-    const url = `http://localhost:3000/budget_categories/${id}`
+    const url = `http://localhost:3000${this.currentPath()}`
 
     Fetch(url, 'get')
     .then(([status, response]) => {
@@ -53,6 +52,10 @@ class BudgetCategory extends React.Component {
         console.log('uh oh')
       }
     })
+  }
+
+  currentPath() {
+    return `/budget_categories/${this.props.match.params.id}`
   }
 
   category() {
@@ -161,7 +164,7 @@ class BudgetCategory extends React.Component {
               }
             </Grid>
             <Grid container justify='center'>
-              <Link to="/new_budget" >
+              <Link to={`${this.currentPath()}/new_transaction`} >
                 <IconButton className={classes.addButton} size='small'>
                   <AddIcon fontSize='large' className={classes.addIcon} />
                 </IconButton>

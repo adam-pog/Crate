@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   put  '/user', to: 'users#update'
 
   # budget
-  get '/budget', to: 'budget#show'
-  post '/budget_categories', to: 'budget#create_category'
-  get '/budget_categories/:id', to: 'budget#show_category'
+  get '/budget', to: 'budget_category#index'
+  post '/budget_categories', to: 'budget_category#create'
+  get '/budget_categories/:id', to: 'budget_category#show'
 end

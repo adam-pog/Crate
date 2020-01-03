@@ -1,5 +1,5 @@
-class BudgetController < ApplicationController
-  def show
+class BudgetCategoryController < ApplicationController
+  def index
     categories = current_user
       .budget_categories
       .with_amount_spent
@@ -15,7 +15,8 @@ class BudgetController < ApplicationController
     render json: payload, status: :ok
   end
 
-  def create_category
+  def create
+    binding.pry
     category = current_user
       .budget_categories
       .build(budget_category_create_params)
@@ -25,7 +26,7 @@ class BudgetController < ApplicationController
     render json: {}, status: status
   end
 
-  def show_category
+  def show
     category = current_user
       .budget_categories
       .with_amount_spent

@@ -6,6 +6,10 @@ import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   login: {
@@ -23,15 +27,21 @@ const styles = theme => ({
   input: {
     margin: theme.spacing(2, 0)
   },
+  recurringLabel: {
+    color: '#fff'
+  },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
   }
 });
 
-class NewBudgetCategory extends React.Component {
+class NewTransaction extends React.Component {
   state = {
-    label: '',
-    monthly_amount: 0
+    amount: 0,
+    source: '',
+    date: '',
+    recurring: false,
+    description: ''
   }
 
   handleSubmit(e) {
@@ -40,7 +50,7 @@ class NewBudgetCategory extends React.Component {
     Fetch(
       'http://localhost:3000/budget_categories',
       'post',
-      JSON.stringify({budget_category: this.state})
+      JSON.stringify({transaction: this.state})
     )
     .then(([status, response]) => {
       if(status === 200) {
@@ -57,6 +67,12 @@ class NewBudgetCategory extends React.Component {
     })
   }
 
+  handleCheck(e) {
+    this.setState({
+      recurring: e.target.checked
+    })
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -68,14 +84,14 @@ class NewBudgetCategory extends React.Component {
         className={classes.login}
       >
         <Typography component='h1' variant='h2' color='textPrimary'>
-          New Budget
+          New Transaction
         </Typography>
         <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
           <Grid container className={classes.input}>
             <TextField
-              label="Label"
+              label="Amount"
               variant="outlined"
-              name="label"
+              name="amount"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
             />
@@ -83,12 +99,39 @@ class NewBudgetCategory extends React.Component {
           <Grid container className={classes.input}>
             <TextField
               variant="outlined"
-              label="Monthly Amount"
-              name="monthly_amount"
+              label="Source"
+              name="source"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
             />
           </Grid>
+          <Grid container className={classes.input}>
+            <TextField
+              variant="outlined"
+              label="Date"
+              name="date"
+              autoComplete="off"
+              onChange={(e) => this.handleFieldChange(e)}
+            />
+          </Grid>
+          <Grid container className={classes.input}>
+            <TextField
+              variant="outlined"
+              label="Description"
+              name="description"
+              autoComplete="off"
+              onChange={(e) => this.handleFieldChange(e)}
+            />
+          </Grid>
+          <FormControlLabel className={classes.recurringLabel}
+            control={
+              <Checkbox
+                checked={this.state.recurring}
+                onChange={(e) => this.handleCheck(e)}
+                value='recurring' />
+            }
+            label="Recurring"
+          />
           <Grid
             container
             justify="center"
@@ -101,7 +144,7 @@ class NewBudgetCategory extends React.Component {
               variant="contained"
               color="primary"
             >
-              Add Budget
+              Add Transaction
             </Button>
           </Grid>
         </form>
@@ -110,5 +153,5 @@ class NewBudgetCategory extends React.Component {
   }
 }
 
-NewBudgetCategory = withStyles(styles)(NewBudgetCategory);
-export default NewBudgetCategory;
+NewTransaction = withStyles(styles)(NewTransaction);
+export default NewTransaction;

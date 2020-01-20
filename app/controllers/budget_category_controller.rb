@@ -16,7 +16,6 @@ class BudgetCategoryController < ApplicationController
   end
 
   def create
-    binding.pry
     category = current_user
       .budget_categories
       .build(budget_category_create_params)

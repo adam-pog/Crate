@@ -6,9 +6,10 @@ import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
-  login: {
+  formGrid: {
     marginBottom: theme.spacing(20),
     display: 'flex',
     flexDirection: 'column',
@@ -25,6 +26,9 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
+  },
+  button: {
+    margin: theme.spacing(0, 0, 0, 0)
   }
 });
 
@@ -38,7 +42,7 @@ class NewBudgetCategory extends React.Component {
     e.preventDefault();
 
     Fetch(
-      'http://localhost:3000/budget_categories',
+      'http:/formGrid/localhost:3000/budget_categories',
       'post',
       JSON.stringify({budget_category: this.state})
     )
@@ -65,7 +69,7 @@ class NewBudgetCategory extends React.Component {
         container
         justify="center"
         alignItems="center"
-        className={classes.login}
+        className={classes.formGrid}
       >
         <Typography component='h1' variant='h2' color='textPrimary'>
           New Budget
@@ -89,20 +93,31 @@ class NewBudgetCategory extends React.Component {
               onChange={(e) => this.handleFieldChange(e)}
             />
           </Grid>
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className={classes.submit}
-          >
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Add Budget
-            </Button>
+          <Grid container direction='row'>
+            <Grid item xs={3} className={classes.button}>
+              <Link to='/budget' style={{ textDecoration: 'none' }}>
+                <Button
+                  fullWidth
+                  type="button"
+                  variant="contained"
+                  color="secondary"
+                >
+                  Cancel
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={1}>
+            </Grid>
+            <Grid item xs={8}>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Add Budget
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>

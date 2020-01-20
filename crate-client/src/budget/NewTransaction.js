@@ -7,9 +7,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Switch from '@material-ui/core/Switch';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   login: {
@@ -22,7 +23,7 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(2, 0),
+    margin: theme.spacing(0, 0),
   },
   input: {
     margin: theme.spacing(2, 0)
@@ -32,6 +33,9 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
+  },
+  recurringGrid: {
+    margin: theme.spacing(2, 0)
   }
 });
 
@@ -42,6 +46,10 @@ class NewTransaction extends React.Component {
     date: '',
     recurring: false,
     description: ''
+  }
+
+  budgetCategoryPath() {
+    return `/budget_categories/${this.props.match.params.id}`
   }
 
   handleSubmit(e) {
@@ -94,6 +102,7 @@ class NewTransaction extends React.Component {
               name="amount"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
+              fullWidth
             />
           </Grid>
           <Grid container className={classes.input}>
@@ -103,6 +112,7 @@ class NewTransaction extends React.Component {
               name="source"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
+              fullWidth
             />
           </Grid>
           <Grid container className={classes.input}>
@@ -112,6 +122,7 @@ class NewTransaction extends React.Component {
               name="date"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
+              fullWidth
             />
           </Grid>
           <Grid container className={classes.input}>
@@ -121,31 +132,47 @@ class NewTransaction extends React.Component {
               name="description"
               autoComplete="off"
               onChange={(e) => this.handleFieldChange(e)}
+              fullWidth
             />
           </Grid>
-          <FormControlLabel className={classes.recurringLabel}
-            control={
-              <Checkbox
-                checked={this.state.recurring}
-                onChange={(e) => this.handleCheck(e)}
-                value='recurring' />
-            }
-            label="Recurring"
-          />
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className={classes.submit}
-          >
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Add Transaction
-            </Button>
+          <Grid item className={classes.recurringGrid}>
+            <FormControlLabel className={classes.recurringLabel}
+              control={
+                <Switch
+                  checked={this.state.recurring}
+                  onChange={(e) => this.handleCheck(e)}
+                  value='recurring'
+                  color='primary'
+                />
+              }
+              label="Recurring"
+              />
+          </Grid>
+          <Grid container direction='row'>
+            <Grid item xs={3}>
+              <Link to={`${this.budgetCategoryPath()}`} style={{ textDecoration: 'none' }}>
+                <Button
+                  fullWidth
+                  type="button"
+                  variant="contained"
+                  color="secondary"
+                  >
+                  Cancel
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={1}>
+            </Grid>
+            <Grid item xs={8}>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Add Transaction
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>

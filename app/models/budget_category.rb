@@ -10,12 +10,11 @@ class BudgetCategory < ApplicationRecord
       .select('
         budget_categories.*,
         COALESCE(SUM(transactions.amount), 0) AS spent,
-        COALESCE(
-          (
-            (monthly_amount - sum(transactions.amount)) / monthly_amount) * 100,
-            0
-          ) as progress
-        ')
+        LEAST(
+          (COALESCE(sum(transactions.amount), 0) / monthly_amount) * 100,
+          100
+        ) AS progress
+      ')
       .group(:id)
   end
 

@@ -42,7 +42,7 @@ class NewBudgetCategory extends React.Component {
     e.preventDefault();
 
     Fetch(
-      'http:/formGrid/localhost:3000/budget_categories',
+      'http://localhost:3000/budget_categories',
       'post',
       JSON.stringify({budget_category: this.state})
     )

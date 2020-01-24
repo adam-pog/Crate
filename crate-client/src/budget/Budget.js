@@ -34,7 +34,7 @@ class Budget extends React.Component {
   }
 
   getBudget() {
-    Fetch('http://localhost:3000/budget', 'get')
+    Fetch('http://localhost:3000/budget_categories', 'get')
     .then(([status, response]) => {
       if(status === 200) {
         this.setState({

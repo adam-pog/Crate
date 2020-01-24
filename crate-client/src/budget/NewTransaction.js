@@ -56,7 +56,7 @@ class NewTransaction extends React.Component {
     e.preventDefault();
 
     Fetch(
-      'http://localhost:3000/budget_categories',
+      `http://localhost:3000${this.budgetCategoryPath()}/transactions`,
       'post',
       JSON.stringify({transaction: this.state})
     )

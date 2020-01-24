@@ -1,4 +1,4 @@
-class BudgetCategoryController < ApplicationController
+class BudgetCategoriesController < ApplicationController
   def index
     categories = current_user
       .budget_categories

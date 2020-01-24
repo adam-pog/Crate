@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   put  '/user', to: 'users#update'
 
   # budget
-  get '/budget', to: 'budget_category#index'
-  post '/budget_categories', to: 'budget_category#create'
-  get '/budget_categories/:id', to: 'budget_category#show'
+  resources :budget_categories, only: [:index, :create, :show]
+
+  # transactions
+  post 'budget_categories/:budget_category_id/transactions', to: 'transactions#create'
 end

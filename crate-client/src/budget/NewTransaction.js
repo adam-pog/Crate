@@ -8,9 +8,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { Link } from 'react-router-dom'
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const styles = theme => ({
   login: {
@@ -81,101 +81,107 @@ class NewTransaction extends React.Component {
     })
   }
 
+  handleDateChange(date) {
+    this.setState({
+      date
+    })
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        className={classes.login}
-      >
-        <Typography component='h1' variant='h2' color='textPrimary'>
-          New Transaction
-        </Typography>
-        <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
-          <Grid container className={classes.input}>
-            <TextField
-              label="Amount"
-              variant="outlined"
-              name="amount"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-              fullWidth
-            />
-          </Grid>
-          <Grid container className={classes.input}>
-            <TextField
-              variant="outlined"
-              label="Source"
-              name="source"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-              fullWidth
-            />
-          </Grid>
-          <Grid container className={classes.input}>
-            <TextField
-              variant="outlined"
-              label="Date"
-              name="date"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-              fullWidth
-            />
-          </Grid>
-          <Grid container className={classes.input}>
-            <TextField
-              variant="outlined"
-              label="Description"
-              name="description"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-              fullWidth
-            />
-          </Grid>
-          <Grid item className={classes.recurringGrid}>
-            <FormControlLabel className={classes.recurringLabel}
-              control={
-                <Switch
-                  checked={this.state.recurring}
-                  onChange={(e) => this.handleCheck(e)}
-                  value='recurring'
-                  color='primary'
-                />
-              }
-              label="Recurring"
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.login}
+        >
+          <Typography component='h1' variant='h2' color='textPrimary'>
+            New Transaction
+          </Typography>
+          <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
+            <Grid container className={classes.input}>
+              <KeyboardDatePicker
+                format="MM/dd/yyyy"
+                label="Date"
+                value={this.state.date || null}
+                onChange={(e) => this.handleDateChange(e)}
               />
-          </Grid>
-          <Grid container direction='row'>
-            <Grid item xs={3}>
-              <Link to={`${this.budgetCategoryPath()}`} style={{ textDecoration: 'none' }}>
+            </Grid>
+            <Grid container className={classes.input}>
+              <TextField
+                label="Amount"
+                variant="outlined"
+                name="amount"
+                autoComplete="off"
+                onChange={(e) => this.handleFieldChange(e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid container className={classes.input}>
+              <TextField
+                variant="outlined"
+                label="Source"
+                name="source"
+                autoComplete="off"
+                onChange={(e) => this.handleFieldChange(e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid container className={classes.input}>
+              <TextField
+                variant="outlined"
+                label="Description"
+                name="description"
+                autoComplete="off"
+                onChange={(e) => this.handleFieldChange(e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item className={classes.recurringGrid}>
+              <FormControlLabel className={classes.recurringLabel}
+                control={
+                  <Switch
+                    checked={this.state.recurring}
+                    onChange={(e) => this.handleCheck(e)}
+                    value='recurring'
+                    color='primary'
+                  />
+                }
+                label="Recurring"
+                />
+            </Grid>
+            <Grid container direction='row'>
+              <Grid item xs={3}>
+                <Link to={`${this.budgetCategoryPath()}`} style={{ textDecoration: 'none' }}>
+                  <Button
+                    fullWidth
+                    type="button"
+                    variant="contained"
+                    color="secondary"
+                    >
+                    Cancel
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item xs={1}>
+              </Grid>
+              <Grid item xs={8}>
                 <Button
                   fullWidth
-                  type="button"
+                  type="submit"
                   variant="contained"
-                  color="secondary"
-                  >
-                  Cancel
+                  color="primary"
+                >
+                  Add Transaction
                 </Button>
-              </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={8}>
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                Add Transaction
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Grid>
+          </form>
+        </Grid>
+      </MuiPickersUtilsProvider>
     )
   }
 }

@@ -43,7 +43,7 @@ class NewTransaction extends React.Component {
   state = {
     amount: 0,
     source: '',
-    date: '',
+    date: new Date(),
     recurring: false,
     description: ''
   }
@@ -62,7 +62,7 @@ class NewTransaction extends React.Component {
     )
     .then(([status, response]) => {
       if(status === 200) {
-        history.push('/budget')
+        history.push(this.budgetCategoryPath())
       } else {
         console.log('uh oh')
       }
@@ -106,7 +106,7 @@ class NewTransaction extends React.Component {
               <KeyboardDatePicker
                 format="MM/dd/yyyy"
                 label="Date"
-                value={this.state.date || null}
+                value={this.state.date}
                 onChange={(e) => this.handleDateChange(e)}
               />
             </Grid>

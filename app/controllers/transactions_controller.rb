@@ -6,11 +6,10 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    binding.pry
     transaction = budget_category
       .transactions
       .build(transaction_create_params)
-    binding.pry
+
     status = transaction.save ? :ok : :bad_request
 
     render json: {}, status: status

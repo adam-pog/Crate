@@ -104,22 +104,28 @@ class BudgetCategory extends React.Component {
   }
 
   transactions() {
-    return this.state.transactions.map((transaction) => {
+    return Object.keys(this.state.transactions).sort().reverse().map((date) => {
       return (
-        <Card key={transaction.id} className={this.props.classes.transactionCard} raised={true}>
+        <Box>
           <Card className={this.props.classes.cardHeader}>
             <Typography component='h1' variant='h6' color='textPrimary' className={this.props.classes.cardHeaderText}>
-              {transaction.date}
+              {date}
             </Typography>
           </Card>
-
-          <Typography component='h1' variant='h6' color='textPrimary'>
-            {transaction.description} - {transaction.amount}
-          </Typography>
-          <Typography component='h1' variant='h6' color='textPrimary'>
-            {transaction.source}
-          </Typography>
-        </Card>
+          <Box>
+            {
+              this.state.transactions[date].map((transaction) => {
+                return (
+                  <Card key={transaction.id} className={this.props.classes.transactionCard} raised={true}>
+                    <Typography component='h1' variant='h6' color='textPrimary'>
+                      {transaction.description} ({transaction.source}) - {transaction.amount}
+                    </Typography>
+                  </Card>
+                )
+              })
+            }
+          </Box>
+        </Box>
       )
     })
   }

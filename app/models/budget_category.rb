@@ -24,9 +24,19 @@ class BudgetCategory < ApplicationRecord
   def details_for_display
     as_json(only: [:id, :label, :monthly_amount])
     .merge({
-      transactions: transactions.map(&:details_for_display),
+      transactions: grouped_transactions,
       spent: spent,
       progress: progress
     })
+  end
+
+  private
+
+  def grouped_transactions
+    transactions.each_with_object({}) do |transaction, group|
+      key = transaction.date.strftime('%b %e, %Y')
+      group[key] ||= []
+      group[key] << transaction.details_for_display
+    end
   end
 end

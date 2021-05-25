@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
-  protect_from_forgery with: :exception, except: [:create]
-  skip_before_action :require_login, only: [:create]
+  protect_from_forgery with: :exception
+  skip_before_action :require_login, only: [:create, :temporary_session]
 
   def create
     user = login(params[:email], params[:password])
@@ -18,11 +18,7 @@ class SessionsController < ApplicationController
     render json: {}, status: :ok
   end
 
-  def test
-    render json: {}, status: :ok
-  end
-
-  def test_post
+  def temporary_session
     render json: {}, status: :ok
   end
 end

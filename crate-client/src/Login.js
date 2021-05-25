@@ -46,6 +46,10 @@ class Login extends React.Component {
     password: ''
   }
 
+  componentDidMount() {
+    Fetch('http://localhost:3000/temporary_session', 'get')
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 

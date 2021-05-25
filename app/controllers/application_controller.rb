@@ -10,12 +10,10 @@ class ApplicationController < ActionController::API
   private
 
   def set_csrf_cookie
-    if session[:user_id]
-      cookies['CSRF-Token'] = {
-        value: form_authenticity_token,
-        expires: 1.hour
-      }
-    end
+    cookies['CSRF-Token'] = {
+      value: form_authenticity_token,
+      expires: 1.hour
+    }
   end
 
   def not_authenticated

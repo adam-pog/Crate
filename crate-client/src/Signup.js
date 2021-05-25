@@ -38,6 +38,10 @@ class Signup extends React.Component {
     password_confirmation: ''
   }
 
+  componentDidMount() {
+    Fetch('http://localhost:3000/temporary_session', 'get')
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 

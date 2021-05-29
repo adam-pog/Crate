@@ -47,14 +47,14 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    Fetch('http://localhost:3000/temporary_session', 'get')
+    Fetch('temporary_session', 'get')
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
     const body = { email: this.state.email, password: this.state.password }
-    Fetch('http://localhost:3000/login', 'post', JSON.stringify(body))
+    Fetch('login', 'post', JSON.stringify(body))
     .then(([status, response]) => {
       if(status === 200) {
         this.props.setAuthenticated({authenticated: true, name: response.name})

@@ -35,7 +35,7 @@ class BudgetCategory extends React.Component {
   }
 
   getTransactions() {
-    const url = `http://localhost:3000${this.currentPath()}`
+    const url = `${this.currentPath()}`
 
     Fetch(url, 'get')
     .then(([status, response]) => {

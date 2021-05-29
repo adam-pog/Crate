@@ -37,7 +37,7 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
 
 class App extends React.Component {
   logout() {
-    Fetch('http://localhost:3000/logout', 'post')
+    Fetch('logout', 'post')
     .then(([status, _response]) => {
       if(status === 200) {
         console.log('logged out')

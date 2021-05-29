@@ -11,7 +11,7 @@ export function Fetch(url, method, body = null) {
       'Content-Type':'application/json',
       ...(csrf_token && {"X-CSRF-Token" : `${csrf_token}`})
     },
-    credentials: 'include',
+    credentials: 'same-origin',
     ...(body && {body: body})
   })
   .then(response => {

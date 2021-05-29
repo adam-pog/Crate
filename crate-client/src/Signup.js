@@ -39,7 +39,7 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    Fetch('http://localhost:3000/temporary_session', 'get')
+    Fetch('temporary_session', 'get')
   }
 
   handleSubmit(e) {
@@ -53,7 +53,7 @@ class Signup extends React.Component {
     }
 
     Fetch(
-      'http://localhost:3000/user',
+      'user',
       'post',
       JSON.stringify({ user: user_payload })
     )

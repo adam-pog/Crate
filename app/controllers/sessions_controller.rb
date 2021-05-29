@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  protect_from_forgery with: :exception
   skip_before_action :require_login, only: [:create, :temporary_session]
 
   def create

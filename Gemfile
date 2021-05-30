@@ -27,7 +27,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'sorcery', '~> 0.16.0'
 gem 'graphql'
-gem 'batch-loader'
+gem 'graphql-batch'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

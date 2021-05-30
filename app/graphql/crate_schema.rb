@@ -2,7 +2,7 @@ class CrateSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 
-  use BatchLoader::GraphQL
+  use GraphQL::Batch
 
   # Union and Interface Resolution
   def self.resolve_type(abstract_type, obj, ctx)

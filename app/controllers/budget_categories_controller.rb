@@ -15,16 +15,6 @@ class BudgetCategoriesController < ApplicationController
     render json: payload, status: :ok
   end
 
-  def create
-    category = current_user
-      .budget_categories
-      .build(budget_category_create_params)
-
-    status = category.save ? :ok : :bad_request
-
-    render json: {}, status: status
-  end
-
   def show
     category = current_user
       .budget_categories
@@ -33,11 +23,5 @@ class BudgetCategoriesController < ApplicationController
 
     render json: {}, status: :unauthorized if category.user != current_user
     render json: category.details_for_display, status: :ok
-  end
-
-  private
-
-  def budget_category_create_params
-    params.require(:budget_category).permit(:label, :monthly_amount)
   end
 end

@@ -9,5 +9,13 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     field :transactions, [::Types::TransactionType], null: false
+
+    def transactions
+      BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |budget_category_ids, loader|
+        Transaction.where(budget_category_id: budget_category_ids).each do |transaction|
+          loader.call(transaction.budget_category_id) { |memo| memo << transaction }
+        end
+      end
+    end
   end
 end

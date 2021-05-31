@@ -31,7 +31,7 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route {...rest} render={(props) => (
     authenticated
       ? <Component {...props} />
-      : <Redirect to='/login' />
+      : <Redirect to='/' />
   )} />
 )
 
@@ -60,24 +60,26 @@ class App extends React.Component {
           <Grid container className="Main">
             <Switch>
               <Route exact path='/'>
-              <Grid container justify="center" alignItems="center">
-                <Typography component="h1" variant="h1" color='textPrimary'>
-                  {
-                    this.props.authenticated &&
-                    `Welcome, ${this.props.name}!`
-                  }
-                  {
-                    !this.props.authenticated &&
-                    "Hello"
-                  }
-                </Typography>
-              </Grid>
-              </Route>
               { !this.props.authenticated &&
-                  <Route path="/login">
-                    <Login />
-                  </Route>
+                <Login />
               }
+              {
+                this.props.authenticated &&
+                <Grid container justify="center" alignItems="center">
+                  <Typography component="h1" variant="h1" color='textPrimary'>
+                    {
+                      this.props.authenticated &&
+                      `Welcome, ${this.props.name}!`
+                    }
+                    {
+                      !this.props.authenticated &&
+                      "Hello"
+                    }
+                  </Typography>
+                </Grid>
+              }
+
+              </Route>
               { !this.props.authenticated &&
                   <Route path="/signup">
                     <Signup />
@@ -103,16 +105,9 @@ class App extends React.Component {
                 component={BudgetCategory}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
-              {!this.props.authenticated &&
-                <Route>
-                  <Redirect to='/login' />
-                </Route>
-              }
-              {this.props.authenticated &&
-                <Route>
-                  <Redirect to='/' />
-                </Route>
-              }
+              <Route>
+                <Redirect to='/' />
+              </Route>
             </Switch>
           </Grid>
         </Router>

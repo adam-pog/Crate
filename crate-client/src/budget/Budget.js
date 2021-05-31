@@ -19,6 +19,7 @@ const getBudgetCategories = gql`
     currentUser {
       income
       budgetCategories {
+        id
         label
         monthlyAmount
         spent

@@ -57,7 +57,7 @@ class Signup extends React.Component {
       if (status !== 200) {
         window.location.reload(false);
       } else {
-        history.push('/login')
+        history.push('/')
       }
     })
   }

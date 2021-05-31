@@ -64,7 +64,7 @@ const Menu = ({authenticated, logout}) => {
             </Grid>
             /
             <Grid item>
-              <Link variant="button" className={classes.link} to="/login" component={RouterLink}>
+              <Link variant="button" className={classes.link} to="/" component={RouterLink}>
                 Log In
               </Link>
             </Grid>

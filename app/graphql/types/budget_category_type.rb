@@ -13,7 +13,12 @@ module Types
     field :progress, Float, null: false
 
     def transactions
-      ::AssociationLoader.for(BudgetCategory, :transactions).load(object)
+      ::AssociationLoader
+        .for(BudgetCategory, :transactions)
+        .load(object)
+        .then do |transactions|
+          transactions.sort_by(&:date)
+        end
     end
 
     def spent

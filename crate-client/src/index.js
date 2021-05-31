@@ -12,9 +12,8 @@ import Cookies from 'js-cookie';
 import { setAuthenticated } from './actions/index';
 import store from "./config/configureStore";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// import CssBaseline from "@material-ui/core/CssBaseline";
 
-
+// get temp session / csrf token from server
 Fetch('temporary_session', 'get')
 
 const theme = createMuiTheme({

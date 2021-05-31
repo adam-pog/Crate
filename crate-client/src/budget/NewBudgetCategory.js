@@ -1,5 +1,4 @@
-import React from 'react';
-import { Fetch } from '../FetchHelper.js'
+import React, { useState } from 'react';
 import history from '../config/history'
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
@@ -7,6 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
+import { gql, useMutation } from '@apollo/client';
+
+const CREATE_BUDGET_CATEGORY = gql`
+  mutation CreateBudgetCategory($label: String!, $monthlyAmount: Int!) {
+    createBudgetCategory(input: { label: $label, monthlyAmount: $monthlyAmount }) {
+      budgetCategory {
+        id
+      }
+    }
+  }
+`;
 
 const styles = theme => ({
   formGrid: {
@@ -32,98 +42,80 @@ const styles = theme => ({
   }
 });
 
-class NewBudgetCategory extends React.Component {
-  state = {
-    label: '',
-    monthly_amount: 0
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-
-    Fetch(
-      'budget_categories',
-      'post',
-      JSON.stringify({budget_category: this.state})
-    )
-    .then(([status, response]) => {
-      if(status === 200) {
-        history.push('/budget')
-      } else {
-        console.log('uh oh')
-      }
-    })
-  }
-
-  handleFieldChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        className={classes.formGrid}
-      >
-        <Typography component='h1' variant='h2' color='textPrimary'>
-          New Budget
-        </Typography>
-        <form onSubmit={(e) => this.handleSubmit(e)} className={classes.form}>
-          <Grid container className={classes.input}>
-            <TextField
-              label="Label"
-              variant="outlined"
-              name="label"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-            />
-          </Grid>
-          <Grid container className={classes.input}>
-            <TextField
-              variant="outlined"
-              label="Monthly Amount"
-              name="monthly_amount"
-              autoComplete="off"
-              onChange={(e) => this.handleFieldChange(e)}
-            />
-          </Grid>
-          <Grid container direction='row'>
-            <Grid item xs={3} className={classes.button}>
-              <Link to='/budget' style={{ textDecoration: 'none' }}>
-                <Button
-                  fullWidth
-                  type="button"
-                  variant="contained"
-                  color="secondary"
-                >
-                  Cancel
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={8}>
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                Add Budget
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Grid>
-    )
-  }
+const handleSubmit = (e, callback) => {
+  e.preventDefault();
+  callback()
 }
 
-NewBudgetCategory = withStyles(styles)(NewBudgetCategory);
-export default NewBudgetCategory;
+function NewBudgetCategory({classes}) {
+  const [label, setLabel] = useState('')
+  const [monthlyAmount, setMonthlyAmount] = useState(0)
+  const [createBudgetCategory, { data }] = useMutation(CREATE_BUDGET_CATEGORY);
+
+  if (data && !data.loading) history.push('/budget')
+
+  const onSubmit = () => createBudgetCategory({variables: { label: label, monthlyAmount: monthlyAmount }})
+
+  return (
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={classes.formGrid}
+    >
+      <Typography component='h1' variant='h2' color='textPrimary'>
+        New Budget
+      </Typography>
+      <form onSubmit={(e) => handleSubmit(e, onSubmit)} className={classes.form}>
+        <Grid container className={classes.input}>
+          <TextField
+            label="Label"
+            variant="outlined"
+            name="label"
+            autoComplete="off"
+            onChange={(e) => setLabel(e.target.value)}
+          />
+        </Grid>
+        <Grid container className={classes.input}>
+          <TextField
+            variant="outlined"
+            label="Monthly Amount"
+            name="monthly_amount"
+            type="number"
+            autoComplete="off"
+            onChange={(e) => setMonthlyAmount(parseInt(e.target.value))}
+          />
+        </Grid>
+        <Grid container direction='row'>
+          <Grid item xs={3} className={classes.button}>
+            <Link to='/budget' style={{ textDecoration: 'none' }}>
+              <Button
+                fullWidth
+                type="button"
+                variant="contained"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={1}>
+          </Grid>
+          <Grid item xs={8}>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Add Budget
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Grid>
+  )
+}
+
+const newBudgetCategory = withStyles(styles)(NewBudgetCategory);
+export default newBudgetCategory;

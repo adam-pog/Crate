@@ -49,7 +49,7 @@ function Login({classes, setAuthenticated}) {
 
   return (
     <div className='terminal'>
-      <div className='promptLine'>
+      <div className='promptContainer'>
         <h3 className='prompt'>></h3>
         <TextareaAutosize
           spellCheck={false}

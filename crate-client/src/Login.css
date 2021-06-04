@@ -17,8 +17,9 @@
 }
 
 .shell {
+  height: 100%;
+  width: 100%;
   resize: none;
-  width: 490px;
   border: none;
   outline-width: 0;
   background: transparent;
@@ -31,7 +32,9 @@
   margin: 0px;
 }
 
-.promptLine {
+.promptContainer {
+  height: 100%;
+  width: 100%;
   display: flex;
   /* justify-content: right; */
 }

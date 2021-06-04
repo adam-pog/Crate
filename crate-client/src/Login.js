@@ -4,12 +4,8 @@ import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
 import history from './config/history'
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Avatar from '@material-ui/core/Avatar';
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -18,27 +14,6 @@ const mapDispatchToProps = dispatch => {
     )
   };
 }
-
-const styles = theme => ({
-  login: {
-    marginBottom: theme.spacing(20),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  form: {
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(2, 0),
-  },
-  input: {
-    margin: theme.spacing(2, 0)
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-  }
-});
 
 const handleSubmit = (e, email, password, set) => {
   e.preventDefault();
@@ -58,54 +33,36 @@ const handleSubmit = (e, email, password, set) => {
 function Login({classes, setAuthenticated}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [text, setText] = useState('')
+
+  const onKeyDown = (e) => {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      // setText(text + 'something')
+      console.log('implement autocomplete')
+    }
+  }
+
+  const onChange = (value) => {
+    setText(value)
+  }
 
   return (
-    <Grid
-      container
-      justify="center"
-      alignItems="center"
-      className={classes.login}
-    >
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon className={classes.icon} />
-      </Avatar>
-      <form onSubmit={(e) => handleSubmit(e, email, password, setAuthenticated)} className={classes.form}>
-        <Grid container className={classes.input}>
-          <TextField
-            label="Email"
-            variant="outlined"
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Grid>
-        <Grid container className={classes.input}>
-          <TextField
-            variant="outlined"
-            label="Password"
-            name="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Grid>
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          className={classes.submit}
+    <div className='terminal'>
+      <div className='promptLine'>
+        <h3 className='prompt'>></h3>
+        <TextareaAutosize
+          spellCheck={false}
+          className='shell'
+          autoFocus
+          value={text}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => onKeyDown(e)}
         >
-          <Button
-            fullWidth
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Login
-          </Button>
-        </Grid>
-      </form>
-    </Grid>
+        </TextareaAutosize>
+      </div>
+    </div>
   )
 }
 
-const login = withStyles(styles)(Login);
-export default connect(null, mapDispatchToProps)(login);
+export default connect(null, mapDispatchToProps)(Login);

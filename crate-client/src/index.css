@@ -1,8 +1,12 @@
 html, body, #root, #App{
   height: 100%;
 }
+
 body {
   margin: 0;
   background-color: #282c34;
   font-family: "Roboto";
+  background-image: url('background-small.jpg');
+  background-size: cover;
+  /* background-color: #222222; */
 }

@@ -6,6 +6,7 @@ body {
   margin: 0;
   background-color: #282c34;
   font-family: "Roboto";
+  font-size: 1em;
   background-image: url('background-small.jpg');
   background-size: cover;
   /* background-color: #222222; */

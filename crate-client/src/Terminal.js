@@ -34,7 +34,15 @@ const scrollToBottom = () =>  {
   })
 }
 
-function Terminal({ commandHistory, addCommandHistory, setPath, onEnter, animate }) {
+function Terminal({
+  commandHistory,
+  addCommandHistory,
+  setPath,
+  onEnter,
+  animate,
+  shell,
+  prompt = '>'
+}) {
   const [text, setText] = useState('')
 
   useEffect(() => {
@@ -42,7 +50,7 @@ function Terminal({ commandHistory, addCommandHistory, setPath, onEnter, animate
   })
 
   const validCommand = (command) => (
-    ['login', 'exit'].includes(command)
+    ['login'].includes(command)
   )
 
   const onKeyDown = (e) => {
@@ -57,7 +65,7 @@ function Terminal({ commandHistory, addCommandHistory, setPath, onEnter, animate
       onEnter(e.target.value);
       setText('');
     } else if(e.keyCode === 27) {
-      setPath('')
+      setPath('/')
     }
   }
 
@@ -69,22 +77,25 @@ function Terminal({ commandHistory, addCommandHistory, setPath, onEnter, animate
     addCommandHistory(history)
   }
 
+  const textArea = () => (
+    <TextareaAutosize
+      spellCheck={false}
+      className='shell'
+      autoFocus
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+      onKeyDown={(e) => onKeyDown(e)}
+    />
+  )
+
   return (
     <div className={`terminal ${animate ? 'animateOpen' : ''}`} id='terminal'>
       <div>
         {renderCommandHistory(commandHistory)}
       </div>
       <div className='promptContainer'>
-        <h3 className='prompt'>></h3>
-        <TextareaAutosize
-          spellCheck={false}
-          className='shell'
-          autoFocus
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => onKeyDown(e)}
-        >
-        </TextareaAutosize>
+        <p className='prompt'>{prompt}</p>
+        {shell || textArea()}
       </div>
     </div>
   )

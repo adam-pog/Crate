@@ -10,7 +10,7 @@ const initialState = {
   name: window.sessionStorage.getItem("name"),
   commandHistory: [],
   animate: true,
-  path: ''
+  path: '/'
 };
 
 function rootReducer(state = initialState, action) {

@@ -64,9 +64,7 @@ class App extends React.Component {
   }
 
   renderLogin() {
-    return <Login
-      exit={() => this.setState({path: ''})}
-    />
+    return <Login />
   }
 
   renderSwitch() {

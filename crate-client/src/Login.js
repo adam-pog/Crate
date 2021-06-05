@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import './Login.scss';
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
@@ -34,12 +34,16 @@ const handleSubmit = (e, email, password, set) => {
 
 function Login({
   setAuthenticated,
+  click
 }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   console.log('watwatat')
   return (
-    <p styles={{color: 'white'}}>Login stuff hewre</p>
+    <div>
+      <p style={{color: 'white'}}>Login stuff hewre</p>
+      <input type='submit' onClick={() => click()}></input>
+    </div>
     // render stuff here?
   )
 }

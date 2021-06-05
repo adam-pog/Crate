@@ -1,7 +1,8 @@
 import {
   SET_AUTHENTICATED,
   ADD_COMMAND_HISTORY,
-  SET_ANIMATE
+  SET_ANIMATE,
+  SET_PATH
 } from "../constants/action-types";
 
 export function setAuthenticated(payload) {
@@ -14,4 +15,8 @@ export function addCommandHistory(payload) {
 
 export function setAnimate(payload) {
   return { type: SET_ANIMATE, payload }
+};
+
+export function setPath(payload) {
+  return { type: SET_PATH, payload }
 };

@@ -3,12 +3,15 @@ import './Terminal.scss';
 import { connect } from "react-redux";
 import TextareaAutosize from 'react-textarea-autosize';
 import { animateScroll } from 'react-scroll'
-import { addCommandHistory } from "./actions/index";
+import { addCommandHistory, setPath } from "./actions/index";
 
 const mapDispatchToProps = dispatch => {
   return {
     addCommandHistory: value => {
       dispatch(addCommandHistory(value))
+    },
+    setPath: value => {
+      dispatch(setPath(value))
     }
   };
 }
@@ -31,7 +34,7 @@ const scrollToBottom = () =>  {
   })
 }
 
-function Terminal({ commandHistory, addCommandHistory, onEnter, animate }) {
+function Terminal({ commandHistory, addCommandHistory, setPath, onEnter, animate }) {
   const [text, setText] = useState('')
 
   useEffect(() => {
@@ -53,6 +56,8 @@ function Terminal({ commandHistory, addCommandHistory, onEnter, animate }) {
       addCommand(e.target.value);
       onEnter(e.target.value);
       setText('');
+    } else if(e.keyCode === 27) {
+      setPath('')
     }
   }
 

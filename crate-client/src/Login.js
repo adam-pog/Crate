@@ -35,9 +35,11 @@ function Login({
 }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [inputType, setInputType] = useState('')
 
   const onEnterCommand = (command) => {
-    exit()
+    // console.log(q)
+    // exit()
   }
 
   return (

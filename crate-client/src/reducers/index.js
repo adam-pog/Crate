@@ -1,14 +1,16 @@
 import {
   SET_AUTHENTICATED,
   ADD_COMMAND_HISTORY,
-  SET_ANIMATE
+  SET_ANIMATE,
+  SET_PATH
 } from '../constants/action-types';
 
 const initialState = {
   authenticated: window.sessionStorage.getItem("authenticated") === 'true',
   name: window.sessionStorage.getItem("name"),
   commandHistory: [],
-  animate: true
+  animate: true,
+  path: ''
 };
 
 function rootReducer(state = initialState, action) {
@@ -26,6 +28,10 @@ function rootReducer(state = initialState, action) {
   } else if (action.type === SET_ANIMATE) {
     return Object.assign({}, state, {
       animate: action.payload
+    });
+  } else if (action.type === SET_PATH) {
+    return Object.assign({}, state, {
+      path: action.payload
     });
   }
   return state;

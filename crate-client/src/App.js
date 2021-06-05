@@ -4,13 +4,14 @@ import Login from './Login.js'
 import Terminal from './Terminal.js'
 // import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
-import { setAuthenticated, setAnimate } from "./actions/index";
+import { setAuthenticated, setAnimate, setPath } from "./actions/index";
 
 const mapStateToProps = state => {
   return {
     authenticated: state.authenticated,
     name: state.name,
-    animate: state.animate
+    animate: state.animate,
+    path: state.path
   };
 };
 
@@ -21,14 +22,16 @@ const mapDispatchToProps = dispatch => {
     ),
     setAnimate: animate => (
       dispatch(setAnimate(animate))
+    ),
+    setPath: path => (
+      dispatch(setPath(path))
     )
   };
 }
 
 class App extends React.Component {
   state = {
-    text: '',
-    path: ''
+    text: ''
   }
 
   componentDidUpdate() {
@@ -49,7 +52,7 @@ class App extends React.Component {
 
   onEnterCommand(command) {
     if (command === 'login') {
-      this.setState({path: 'login'})
+      this.props.setPath('login')
     }
   }
 
@@ -67,7 +70,7 @@ class App extends React.Component {
   }
 
   renderSwitch() {
-    switch(this.state.path) {
+    switch(this.props.path) {
       case 'login':
         return this.renderLogin();
       default:

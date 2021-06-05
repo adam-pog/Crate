@@ -17,19 +17,6 @@ const mapStateToProps = state => {
   return { commandHistory: state.commandHistory };
 };
 
-const onKeyDown = (e, setText, addCommand, onEnter) => {
-  if (e.keyCode === 9) {
-    e.preventDefault();
-
-    console.log('implement autocomplete')
-  } else if (e.keyCode === 13) {
-    e.preventDefault();
-    addCommand([`>${e.target.value}`, `${e.target.value}: command not found`]);
-    onEnter(e.target.value);
-    setText('');
-  }
-}
-
 const renderCommandHistory = (commandHistory) =>  {
   return commandHistory.map((command, i) => (
     <p key={i} className='command'>{command}</p>
@@ -44,15 +31,41 @@ const scrollToBottom = () =>  {
   })
 }
 
-function Terminal({ commandHistory, addCommandHistory, onEnter }) {
+function Terminal({ commandHistory, addCommandHistory, onEnter, animate }) {
   const [text, setText] = useState('')
 
   useEffect(() => {
     scrollToBottom();
   })
 
+  const validCommand = (command) => (
+    ['login', 'exit'].includes(command)
+  )
+
+  const onKeyDown = (e) => {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+
+      console.log('implement autocomplete')
+    } else if (e.keyCode === 13) {
+      e.preventDefault();
+
+      addCommand(e.target.value);
+      onEnter(e.target.value);
+      setText('');
+    }
+  }
+
+  const addCommand = (value) => {
+    let history = [`>${value}`]
+
+    if (!validCommand(value)) history = history.concat(`${value}: command not found`)
+
+    addCommandHistory(history)
+  }
+
   return (
-    <div className='terminal' id='terminal'>
+    <div className={`terminal ${animate ? 'animateOpen' : ''}`} id='terminal'>
       <div>
         {renderCommandHistory(commandHistory)}
       </div>
@@ -64,12 +77,7 @@ function Terminal({ commandHistory, addCommandHistory, onEnter }) {
           autoFocus
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => onKeyDown(
-            e,
-            setText,
-            addCommandHistory,
-            onEnter
-          )}
+          onKeyDown={(e) => onKeyDown(e)}
         >
         </TextareaAutosize>
       </div>

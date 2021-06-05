@@ -2,14 +2,15 @@ import React from 'react';
 import './App.scss';
 import Login from './Login.js'
 import Terminal from './Terminal.js'
-import { Fetch } from './FetchHelper.js'
+// import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
-import { setAuthenticated } from "./actions/index";
+import { setAuthenticated, setAnimate } from "./actions/index";
 
 const mapStateToProps = state => {
   return {
     authenticated: state.authenticated,
-    name: state.name
+    name: state.name,
+    animate: state.animate
   };
 };
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setAuthenticated: authenticated => (
       dispatch(setAuthenticated(authenticated))
+    ),
+    setAnimate: animate => (
+      dispatch(setAnimate(animate))
     )
   };
 }
@@ -27,24 +31,23 @@ class App extends React.Component {
     path: ''
   }
 
-  logout() {
-    Fetch('logout', 'post')
-    .then(([status, _response]) => {
-      if(status === 200) {
-        console.log('logged out')
-        this.props.setAuthenticated({authenticated: false, name: ''})
-      } else {
-        console.log('uh oh')
-      }
-    })
+  componentDidUpdate() {
+    this.props.setAnimate(false)
   }
 
-  renderLogin() {
-    return <Login click={() => this.setState({path: ''})}/>
-  }
+  // logout() {
+  //   Fetch('logout', 'post')
+  //   .then(([status, _response]) => {
+  //     if(status === 200) {
+  //       console.log('logged out')
+  //       this.props.setAuthenticated({authenticated: false, name: ''})
+  //     } else {
+  //       console.log('uh oh')
+  //     }
+  //   })
+  // }
 
   onEnterCommand(command) {
-    console.log(command)
     if (command === 'login') {
       this.setState({path: 'login'})
     }
@@ -53,6 +56,13 @@ class App extends React.Component {
   renderTerminal() {
     return <Terminal
       onEnter={(command) => this.onEnterCommand(command)}
+      animate={this.props.animate}
+    />
+  }
+
+  renderLogin() {
+    return <Login
+      exit={() => this.setState({path: ''})}
     />
   }
 

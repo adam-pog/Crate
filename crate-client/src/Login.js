@@ -3,8 +3,7 @@ import './Login.scss';
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
-
-
+import Terminal from './Terminal.js'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -18,14 +17,12 @@ const mapStateToProps = state => {
   return { commandHistory: state.commandHistory };
 };
 
-const handleSubmit = (e, email, password, set) => {
-  e.preventDefault();
-  console.log(set)
+const handleSubmit = (email, password, setAuthenticated) => {
   const body = { email: email, password: password }
   Fetch('login', 'post', JSON.stringify(body))
   .then(([status, response]) => {
     if(status === 200) {
-      set({authenticated: true, name: response.name})
+      setAuthenticated({authenticated: true, name: response.name})
     } else {
       console.log('uh oh')
     }
@@ -34,17 +31,19 @@ const handleSubmit = (e, email, password, set) => {
 
 function Login({
   setAuthenticated,
-  click
+  exit
 }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  console.log('watwatat')
+
+  const onEnterCommand = (command) => {
+    exit()
+  }
+
   return (
-    <div>
-      <p style={{color: 'white'}}>Login stuff hewre</p>
-      <input type='submit' onClick={() => click()}></input>
-    </div>
-    // render stuff here?
+    <Terminal
+      onEnter={(command) => onEnterCommand(command)}
+    />
   )
 }
 

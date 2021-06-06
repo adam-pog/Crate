@@ -4,6 +4,7 @@ import Login from './Login.js'
 import Terminal from './Terminal.js'
 // import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
+import { Fetch } from './FetchHelper.js'
 import {
   setAuthenticated,
   setAnimate,
@@ -46,17 +47,17 @@ class App extends React.Component {
     this.props.setAnimate(false)
   }
 
-  // logout() {
-  //   Fetch('logout', 'post')
-  //   .then(([status, _response]) => {
-  //     if(status === 200) {
-  //       console.log('logged out')
-  //       this.props.setAuthenticated({authenticated: false, name: ''})
-  //     } else {
-  //       console.log('uh oh')
-  //     }
-  //   })
-  // }
+  logout() {
+    Fetch('logout', 'post')
+    .then(([status, _response]) => {
+      if(status === 200) {
+        this.props.addCommandHistory(`--- Successfully logged out ---`)
+        this.props.setAuthenticated({authenticated: false, name: ''})
+      } else {
+        this.props.addCommandHistory('--- error logging out ---');
+      }
+    })
+  }
 
   onEnterCommand(command) {
     const valid = this.validateCommand(command);
@@ -64,15 +65,19 @@ class App extends React.Component {
 
     if (command === 'login') {
       this.props.setPath('login')
+    } else if (command === 'logout') {
+      this.logout()
     }
   }
 
   validateCommand(command) {
-    let validCommands = ['login']
+    let validCommands = ['login', 'logout']
     let history = [`>${command}`]
 
     if ((command === 'login') && this.props.authenticated) {
-      history = history.concat(`${command}: already authenticated`);
+      history = history.concat(`${command}: already logged in`);
+    } else if ((command === 'logout') && !this.props.authenticated) {
+      history = history.concat(`${command}: not logged in`);
     }
 
     if (!validCommands.includes(command)) history = history.concat(`${command}: command not found`);

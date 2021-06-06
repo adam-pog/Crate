@@ -37,7 +37,7 @@ function Terminal({
   onEnter,
   animate,
   shell,
-  prompt = '>'
+  prompt = '~>'
 }) {
   const [text, setText] = useState('')
 

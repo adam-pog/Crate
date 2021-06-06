@@ -5,12 +5,14 @@ import {
   SET_PATH
 } from '../constants/action-types';
 
+const authenticated = window.sessionStorage.getItem("authenticated") === 'true'
+
 const initialState = {
-  authenticated: window.sessionStorage.getItem("authenticated") === 'true',
+  authenticated,
   name: window.sessionStorage.getItem("name"),
   commandHistory: [],
   animate: true,
-  path: '/'
+  path: authenticated ? '/budget' : '/'
 };
 
 function rootReducer(state = initialState, action) {

@@ -41,7 +41,9 @@ function Login({
     .then(([status, response]) => {
       if(status === 200) {
         setAuthenticated({authenticated: true, name: response.name});
+        addHistory();
         addCommandHistory(`--- Authentication Successful ---`)
+        setPath('/');
       } else {
         addCommandHistory(`--- Authentication Failed ---`)
       }
@@ -67,8 +69,6 @@ function Login({
       addHistory();
     } else if (prompt === passwordPrompt) {
       login(command)
-      addHistory();
-      exit();
     }
   }
 

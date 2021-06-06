@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Login from './Login.js'
+import Budget from './Budget.js'
 import Terminal from './Terminal.js'
 // import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
@@ -11,6 +12,8 @@ import {
   setPath,
   addCommandHistory
 } from "./actions/index";
+
+import { ALL_COMMANDS, AUTHENTICATED_COMMANDS, LOGIN, LOGOUT } from './constants/commands'
 
 const mapStateToProps = state => {
   return {
@@ -53,6 +56,7 @@ class App extends React.Component {
       if(status === 200) {
         this.props.addCommandHistory(`--- Successfully logged out ---`)
         this.props.setAuthenticated({authenticated: false, name: ''})
+        this.props.setPath('/')
       } else {
         this.props.addCommandHistory('--- error logging out ---');
       }
@@ -63,24 +67,23 @@ class App extends React.Component {
     const valid = this.validateCommand(command);
     if (!valid) return;
 
-    if (command === 'login') {
-      this.props.setPath('login')
-    } else if (command === 'logout') {
+    if (command === LOGIN) {
+      this.props.setPath('/login')
+    } else if (command === LOGOUT) {
       this.logout()
     }
   }
 
   validateCommand(command) {
-    let validCommands = ['login', 'logout']
-    let history = [`>${command}`]
+    let history = [`~>${command}`]
 
-    if ((command === 'login') && this.props.authenticated) {
+    if ((command === LOGIN) && this.props.authenticated) {
       history = history.concat(`${command}: already logged in`);
-    } else if ((command === 'logout') && !this.props.authenticated) {
+    } else if ((AUTHENTICATED_COMMANDS.includes(command)) && !this.props.authenticated) {
       history = history.concat(`${command}: not logged in`);
     }
 
-    if (!validCommands.includes(command)) history = history.concat(`${command}: command not found`);
+    if (!ALL_COMMANDS.includes(command)) history = history.concat(`${command}: command not found`);
 
     this.props.addCommandHistory(history);
 
@@ -98,12 +101,19 @@ class App extends React.Component {
     return <Login />
   }
 
+  renderBudget() {
+    return <Budget
+      baseOnEnterCommand={(command) => this.onEnterCommand(command)}
+    />
+  }
+
   renderSwitch() {
     switch(this.props.path) {
-      case 'login':
+      case '/login':
         return this.renderLogin();
       default:
-        return this.renderTerminal()
+        return this.props.authenticated ? this.renderBudget() :
+                                          this.renderTerminal();
     }
   }
 

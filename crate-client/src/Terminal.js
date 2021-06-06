@@ -3,13 +3,10 @@ import './Terminal.scss';
 import { connect } from "react-redux";
 import TextareaAutosize from 'react-textarea-autosize';
 import { animateScroll } from 'react-scroll'
-import { addCommandHistory, setPath } from "./actions/index";
+import { setPath } from "./actions/index";
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCommandHistory: value => {
-      dispatch(addCommandHistory(value))
-    },
     setPath: value => {
       dispatch(setPath(value))
     }
@@ -36,7 +33,6 @@ const scrollToBottom = () =>  {
 
 function Terminal({
   commandHistory,
-  addCommandHistory,
   setPath,
   onEnter,
   animate,
@@ -49,10 +45,6 @@ function Terminal({
     scrollToBottom();
   })
 
-  const validCommand = (command) => (
-    ['login'].includes(command)
-  )
-
   const onKeyDown = (e) => {
     if (e.keyCode === 9) {
       e.preventDefault();
@@ -61,20 +53,11 @@ function Terminal({
     } else if (e.keyCode === 13) {
       e.preventDefault();
 
-      addCommand(e.target.value);
       onEnter(e.target.value);
       setText('');
     } else if(e.keyCode === 27) {
       setPath('/')
     }
-  }
-
-  const addCommand = (value) => {
-    let history = [`>${value}`]
-
-    if (!validCommand(value)) history = history.concat(`${value}: command not found`)
-
-    addCommandHistory(history)
   }
 
   const textArea = () => (

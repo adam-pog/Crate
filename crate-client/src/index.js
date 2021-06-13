@@ -11,28 +11,9 @@ import { Fetch } from './FetchHelper.js'
 import Cookies from 'js-cookie';
 import { setAuthenticated } from './actions/index';
 import store from "./config/configureStore";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // get temp session / csrf token from server
 Fetch('temporary_session', 'get')
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      light: '#4dabf5',
-      main: '#2196f3',
-      dark: '#1769aa',
-      // contrastText: '#fff',
-    },
-    secondary: {
-      light: '#f73378',
-      main: '#f50057',
-      dark: '#ab003c',
-      // contrastText: '#fff',
-    }
-  }
-});
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -62,11 +43,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </MuiThemeProvider>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </Provider>,
   document.getElementById('root')
 );

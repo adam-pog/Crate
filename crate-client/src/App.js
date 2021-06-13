@@ -1,117 +1,127 @@
 import React from 'react';
-import './App.css';
-import { Route, Router, Switch, Redirect } from 'react-router-dom'
+import './App.scss';
 import Login from './Login.js'
-import Signup from './Signup.js'
-import { Fetch } from './FetchHelper.js'
+import Budget from './Budget.js'
+import Terminal from './Terminal.js'
+// import { Fetch } from './FetchHelper.js'
 import { connect } from "react-redux";
-import history from './config/history';
-import { setAuthenticated } from "./actions/index";
-import Menu from './Menu.js'
-import Budget from './budget/Budget.js'
-import NewBudgetCategory from './budget/NewBudgetCategory.js'
-import NewTransaction from './budget/NewTransaction.js'
-import BudgetCategory from './budget/BudgetCategory.js'
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Fetch } from './FetchHelper.js'
+import {
+  setAuthenticated,
+  setAnimate,
+  setPath,
+  addCommandHistory
+} from "./actions/index";
+
+import { ALL_COMMANDS, AUTHENTICATED_COMMANDS, LOGIN, LOGOUT } from './constants/commands'
 
 const mapStateToProps = state => {
-  return { authenticated: state.authenticated, name: state.name };
+  return {
+    authenticated: state.authenticated,
+    name: state.name,
+    animate: state.animate,
+    path: state.path
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setAuthenticated: authenticated => (
       dispatch(setAuthenticated(authenticated))
+    ),
+    setAnimate: animate => (
+      dispatch(setAnimate(animate))
+    ),
+    setPath: path => (
+      dispatch(setPath(path))
+    ),
+    addCommandHistory: command => (
+      dispatch(addCommandHistory(command))
     )
   };
 }
 
-const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    authenticated
-      ? <Component {...props} />
-      : <Redirect to='/' />
-  )} />
-)
-
 class App extends React.Component {
+  state = {
+    text: ''
+  }
+
+  componentDidUpdate() {
+    this.props.setAnimate(false)
+  }
+
   logout() {
     Fetch('logout', 'post')
     .then(([status, _response]) => {
       if(status === 200) {
-        console.log('logged out')
+        this.props.addCommandHistory(`--- Successfully logged out ---`)
         this.props.setAuthenticated({authenticated: false, name: ''})
+        this.props.setPath('/')
       } else {
-        console.log('uh oh')
+        this.props.addCommandHistory('--- error logging out ---');
       }
     })
   }
 
+  onEnterCommand(command) {
+    const valid = this.validateCommand(command);
+    if (!valid) return;
+
+    if (command === LOGIN) {
+      this.props.setPath('/login')
+    } else if (command === LOGOUT) {
+      this.logout()
+    }
+  }
+
+  validateCommand(command) {
+    let history = [`~>${command}`]
+
+    if ((command === LOGIN) && this.props.authenticated) {
+      history = history.concat(`${command}: already logged in`);
+    } else if ((AUTHENTICATED_COMMANDS.includes(command)) && !this.props.authenticated) {
+      history = history.concat(`${command}: not logged in`);
+    }
+
+    if (!ALL_COMMANDS.includes(command)) history = history.concat(`${command}: command not found`);
+
+    this.props.addCommandHistory(history);
+
+    return history.length === 1;
+  }
+
+  renderTerminal() {
+    return <Terminal
+      onEnter={ (command) => this.onEnterCommand(command) }
+      animate={ this.props.animate }
+    />
+  }
+
+  renderLogin() {
+    return <Login />
+  }
+
+  renderBudget() {
+    return <Budget
+      baseOnEnterCommand={(command) => this.onEnterCommand(command)}
+    />
+  }
+
+  renderSwitch() {
+    switch(this.props.path) {
+      case '/login':
+        return this.renderLogin();
+      default:
+        return this.props.authenticated ? this.renderBudget() :
+                                          this.renderTerminal();
+    }
+  }
+
   render() {
     return (
-      <Grid container id="App">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <Router history={ history }>
-          <header>
-            <Menu authenticated={this.props.authenticated} logout={() => this.logout()} />
-          </header>
-          <Grid container className="Main">
-            <Switch>
-              <Route exact path='/'>
-              { !this.props.authenticated &&
-                <Login />
-              }
-              {
-                this.props.authenticated &&
-                <Grid container justify="center" alignItems="center">
-                  <Typography component="h1" variant="h1" color='textPrimary'>
-                    {
-                      this.props.authenticated &&
-                      `Welcome, ${this.props.name}!`
-                    }
-                    {
-                      !this.props.authenticated &&
-                      "Hello"
-                    }
-                  </Typography>
-                </Grid>
-              }
-
-              </Route>
-              { !this.props.authenticated &&
-                  <Route path="/signup">
-                    <Signup />
-                  </Route>
-              }
-              <PrivateRoute
-                path='/budget'
-                component={Budget}
-                authenticated={this.props.authenticated}>
-              </PrivateRoute>
-              <PrivateRoute
-                path='/new_budget'
-                component={NewBudgetCategory}
-                authenticated={this.props.authenticated}>
-              </PrivateRoute>
-              <PrivateRoute
-                path='/budget_categories/:id/new_transaction'
-                component={NewTransaction}
-                authenticated={this.props.authenticated}>
-              </PrivateRoute>
-              <PrivateRoute
-                path='/budget_categories/:id'
-                component={BudgetCategory}
-                authenticated={this.props.authenticated}>
-              </PrivateRoute>
-              <Route>
-                <Redirect to='/' />
-              </Route>
-            </Switch>
-          </Grid>
-        </Router>
-      </Grid>
+      <div className='App'>
+        {this.renderSwitch()}
+      </div>
     )
   }
 }

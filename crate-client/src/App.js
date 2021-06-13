@@ -33,14 +33,6 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
 )
 
 class App extends React.Component {
-  state = {
-    text: ''
-  }
-
-  componentDidUpdate() {
-    this.props.setAnimate(false)
-  }
-
   logout() {
     Fetch('logout', 'post')
     .then(([status, _response]) => {
@@ -63,7 +55,7 @@ class App extends React.Component {
               }
               {
                 this.props.authenticated &&
-                <p>`Hello ${this.props.name}`</p>
+                <p>{`Hello ${this.props.name}`}</p>
               }
             </Route>
             { !this.props.authenticated &&

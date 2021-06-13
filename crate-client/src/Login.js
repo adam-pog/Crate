@@ -13,12 +13,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 function Login({ setAuthenticated }) {
-  const emailPrompt = 'Email: ';
-  const passwordPrompt = 'Password: ';
   const [email, setEmail] = useState('');
-  const [value, setValue] = useState('');
+  const [password, setPassword] = useState('');
 
-  const login = (password) => {
+  const login = () => {
     const body = { email: email, password: password }
 
     Fetch('login', 'post', JSON.stringify(body))
@@ -31,8 +29,43 @@ function Login({ setAuthenticated }) {
     })
   }
 
+  const onKeyDown = (key) => {
+    if (key === 'Enter') login()
+  }
+
   return (
-    <p>WAT</p>
+    <div className={'inputContainer'}>
+      <span className='inputWrap'>
+        <input
+          type='text'
+          className='input'
+          autoFocus
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='Email'
+          onKeyPress={(e) => onKeyDown(e.key)}
+          >
+        </input>
+      </span>
+
+      <span className='inputWrap'>
+        <input
+          type='password'
+          className='input'
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder='Password'
+          onKeyPress={(e) => onKeyDown(e.key)}
+        >
+        </input>
+      </span>
+
+      <input
+        className='loginSubmit'
+        type='button'
+        value='Submit'
+        onClick={login}
+      >
+      </input>
+    </div>
   )
 }
 

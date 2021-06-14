@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Login.scss';
+import history from './config/history'
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
@@ -23,6 +24,7 @@ function Login({ setAuthenticated }) {
     .then(([status, response]) => {
       if(status === 200) {
         setAuthenticated({authenticated: true, name: response.name});
+        history.push('/budget_categories')
       } else {
         console.log('Authentication Failed')
       }

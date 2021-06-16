@@ -66,7 +66,7 @@ class App extends React.Component {
         <Router history={ history }>
           {
             this.props.authenticated &&
-            <ol className={'menu'} >
+            <ol className={'menu'} data-class='container' onDoubleClick={(e) => this.onDoubleClick(e.target)}>
               <li className={`listItem ${this.state.menuState}`}>
                 <Link className="menuLink" to="/budget_categories" > Home </Link>
               </li>

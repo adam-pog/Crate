@@ -24,7 +24,7 @@
 
 .budgetCategoryContainerWrap {
   margin-top: 1%;
-  width: 70%;
+  width: 50%;
   filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.5));
 }
 
@@ -53,5 +53,13 @@
 }
 
 .categoryAmount {
-  flex: 1
+  flex: 1;
+}
+
+.budgetColor {
+  color: #00c4ff;
+}
+
+.overBudgetColor {
+  color: #ff3333;
 }

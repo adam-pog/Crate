@@ -26,6 +26,11 @@ function BudgetCategories() {
     console.log(data.currentUser)
   }
 
+  const amountClass = (budgetCategory) => (
+    budgetCategory.spent < budgetCategory.monthlyAmount ?
+    'budgetColor' : 'overBudgetColor'
+  )
+
   return (
     <div className={'budgetCategories'} data-class='container'>
       { error && <p>'Error fetching data'</p> }
@@ -34,7 +39,7 @@ function BudgetCategories() {
           <span key={i} className='budgetCategoryContainerWrap'>
             <div className='budgetCategoryContainer'>
               <p className='categoryLabel'>{datum.label}</p>
-              <p className='categoryAmount'>{datum.spent} / {datum.monthlyAmount}</p>
+              <p className={`categoryAmount ${amountClass(datum)}`}>{datum.spent} / {datum.monthlyAmount}</p>
             </div>
           </span>
         ))

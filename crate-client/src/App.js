@@ -22,10 +22,10 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
+const PrivateRoute = ({ component: Component, authenticated, menuState, ...rest }) => (
   <Route {...rest} render={(props) => (
     authenticated
-      ? <Component {...props} />
+      ? <Component {...props } menuState={menuState}/>
       : <Redirect to='/' />
   )} />
 )
@@ -48,7 +48,6 @@ class App extends React.Component {
   }
 
   onDoubleClick(target) {
-    console.log('target: ', target)
     if (!this.props.authenticated) return;
 
     if (target.dataset.class === 'container') {
@@ -56,7 +55,6 @@ class App extends React.Component {
         this.setState({ menuState: 'openMenu' })
       } else {
         this.setState({ menuState: 'closeMenu' })
-
       }
     }
   }
@@ -96,6 +94,7 @@ class App extends React.Component {
               <PrivateRoute
                 path='/budget_categories'
                 component={BudgetCategories}
+                menuState={this.state.menuState}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>
 

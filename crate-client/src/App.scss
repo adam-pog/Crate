@@ -17,11 +17,17 @@
   user-select: none;
 }
 
+@media only screen and (max-width: 950px) {
+  .menu {
+    width: 80%;
+  }
+}
+
 .listItem {
   text-align: center;
   width: 10%;
   margin-top: 2%;
-  background-color: #2a614d;
+  background-color: #007ba0bb;
   padding: 1%;
   border-radius: 10px;
 }
@@ -58,7 +64,7 @@
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 @media only screen and (max-width: 600px) {

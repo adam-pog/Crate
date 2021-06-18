@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './budgetCategories.scss';
-import { connect } from "react-redux";
 import { gql, useQuery } from '@apollo/client';
 
 const getBudgetCategories = gql`
@@ -32,9 +31,10 @@ function BudgetCategories() {
       { error && <p>'Error fetching data'</p> }
       {
         data && data.currentUser.budgetCategories.map((datum, i) => (
-          <span className='budgetCategoryContainerWrap'>
-            <div key={i} className='budgetCategoryContainer'>
-              <p>{datum.label}</p>
+          <span key={i} className='budgetCategoryContainerWrap'>
+            <div className='budgetCategoryContainer'>
+              <p className='categoryLabel'>{datum.label}</p>
+              <p className='categoryAmount'>{datum.spent} / {datum.monthlyAmount}</p>
             </div>
           </span>
         ))

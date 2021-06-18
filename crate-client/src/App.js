@@ -71,7 +71,7 @@ class App extends React.Component {
                 <Link className="menuLink" to="/budget_categories" > Home </Link>
               </li>
               <li className={`listItem ${this.state.menuState}`}>
-                <a className="menuLink"  onClick={() => this.logout()}> Logout </a>
+                <button className="menuLink" onClick={() => this.logout()}> Logout </button>
               </li>
             </ol>
           }

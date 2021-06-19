@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.scss';
 import Login from './Login.js'
-import BudgetCategories from './budgetCategories.js'
+import BudgetCategories from './BudgetCategories.js'
+import AddBudgetCategory from './AddBudgetCategory.js'
 import history from './config/history';
 import { Route, Router, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux";
@@ -22,10 +23,10 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-const PrivateRoute = ({ component: Component, authenticated, menuState, ...rest }) => (
+const PrivateRoute = ({ component: Component, authenticated, menuState, hideMenu, ...rest }) => (
   <Route {...rest} render={(props) => (
     authenticated
-      ? <Component {...props } menuState={menuState}/>
+      ? <Component {...props } menuState={menuState} hideMenu={hideMenu}/>
       : <Redirect to='/' />
   )} />
 )
@@ -54,9 +55,13 @@ class App extends React.Component {
       if (this.state.menuState === 'hidden' || this.state.menuState === 'closeMenu') {
         this.setState({ menuState: 'openMenu' })
       } else {
-        this.setState({ menuState: 'closeMenu' })
+        this.hideMenu()
       }
     }
+  }
+
+  hideMenu() {
+    this.setState({ menuState: 'hidden' })
   }
 
   render() {
@@ -94,6 +99,14 @@ class App extends React.Component {
               <PrivateRoute
                 path='/budget_categories'
                 component={BudgetCategories}
+                menuState={this.state.menuState}
+                hideMenu={() => this.hideMenu()}
+                authenticated={this.props.authenticated}>
+              </PrivateRoute>
+
+              <PrivateRoute
+                path='/add_budget_category'
+                component={AddBudgetCategory}
                 menuState={this.state.menuState}
                 authenticated={this.props.authenticated}>
               </PrivateRoute>

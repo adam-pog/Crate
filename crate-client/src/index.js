@@ -29,7 +29,8 @@ const csrfLink = setContext((_, { headers }) => {
   }
 });
 
-const errorLink = onError(({ networkError }) => {
+const errorLink = onError(({ networkError, graphQLErrors }) => {
+  console.log(graphQLErrors)
   if (networkError && [401, 422].includes(networkError.statusCode)) {
     store.dispatch(setAuthenticated({authenticated: false, name: ''}));
     Fetch('temporary_session', 'get')
@@ -38,7 +39,8 @@ const errorLink = onError(({ networkError }) => {
 
 const client = new ApolloClient({
   link: from([errorLink, csrfLink, httpLink]),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  errorPolicy: 'all'
 });
 
 ReactDOM.render(

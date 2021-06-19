@@ -108,3 +108,25 @@
     width: 20%;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .budgetCategories {
+    height: 70%;
+  }
+
+  .budgetCategoryContainerWrap {
+    width: 90%
+  }
+
+  .addBudgetCategory {
+    height: 6%;
+    width: 45%;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .addBudgetCategory {
+    height: 10%;
+    width: 30%;
+  }
+}

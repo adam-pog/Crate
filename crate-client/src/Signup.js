@@ -1,42 +1,47 @@
 import React, { useState } from 'react';
-import './Login.scss';
+import './Signup.scss';
 import history from './config/history'
 import { Fetch } from './FetchHelper.js'
 import { setAuthenticated } from "./actions/index";
 import { connect } from "react-redux";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setAuthenticated: authenticated => (
-      dispatch(setAuthenticated(authenticated))
-    )
-  };
-}
-
-function Login({ setAuthenticated }) {
+function Signup({ setAuthenticated }) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const login = () => {
-    const body = { email: email, password: password }
+  const signup = () => {
+    const body = { email: email, password: password, name: name }
 
-    Fetch('login', 'post', JSON.stringify(body))
+    Fetch('user', 'post', JSON.stringify(body))
     .then(([status, response]) => {
       if(status === 200) {
-        setAuthenticated({authenticated: true, name: response.name});
-        history.push('/budget_categories')
+        history.push('/login')
       } else {
-        console.log('Authentication Failed')
+        console.log(`User creation failed: ${response.errors}`)
+        console.log(response.errors)
       }
     })
   }
 
   const onKeyDown = (key) => {
-    if (key === 'Enter') login()
+    if (key === 'Enter') signup()
   }
 
   return (
     <div className={'inputContainer'} data-class='container'>
+      <span className='inputWrap'>
+        <input
+          type='text'
+          className='input'
+          autoFocus
+          onChange={(e) => setName(e.target.value)}
+          placeholder='Name'
+          onKeyPress={(e) => onKeyDown(e.key)}
+          >
+        </input>
+      </span>
+
       <span className='inputWrap'>
         <input
           type='text'
@@ -61,14 +66,14 @@ function Login({ setAuthenticated }) {
       </span>
 
       <input
-        className='loginSubmit'
+        className='signupSubmit'
         type='button'
-        value='Submit'
-        onClick={login}
+        value='Signup'
+        onClick={signup}
       >
       </input>
     </div>
   )
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Signup;

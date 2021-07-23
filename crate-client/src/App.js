@@ -55,7 +55,7 @@ class App extends React.Component {
       if (this.state.menuState === 'hidden' || this.state.menuState === 'closeMenu') {
         this.setState({ menuState: 'openMenu' })
       } else {
-        this.hideMenu()
+        this.setState({ menuState: 'closeMenu' })
       }
     }
   }

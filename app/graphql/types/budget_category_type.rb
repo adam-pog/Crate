@@ -28,6 +28,8 @@ module Types
     end
 
     def progress
+      return 0 if object.monthly_amount == 0
+
       spent.then do |amount|
         (amount / object.monthly_amount) * 100
       end

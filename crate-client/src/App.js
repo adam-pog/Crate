@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Login from './Login.js'
+import Signup from './Signup.js'
 import BudgetCategories from './BudgetCategories.js'
 import AddBudgetCategory from './AddBudgetCategory.js'
 import history from './config/history';
@@ -49,8 +50,6 @@ class App extends React.Component {
   }
 
   onDoubleClick(target) {
-    if (!this.props.authenticated) return;
-
     if (target.dataset.class === 'container') {
       if (this.state.menuState === 'hidden' || this.state.menuState === 'closeMenu') {
         this.setState({ menuState: 'openMenu' })
@@ -78,6 +77,21 @@ class App extends React.Component {
               </li>
             </ol>
           }
+          {
+            !this.props.authenticated &&
+            <ol className={'menu'} data-class='container' onDoubleClick={(e) => this.onDoubleClick(e.target)}>
+              <li className={`listItem ${this.state.menuState}`}>
+                {
+                  (history.location.pathname == '/login') &&
+                  <Link className="menuLink" to="/signup" onClick={() => this.hideMenu()}> Signup </Link>
+                }
+                {
+                  (history.location.pathname == '/signup') &&
+                  <Link className="menuLink" to="/login" onClick={() => this.hideMenu()}> Login </Link>
+                }
+              </li>
+            </ol>
+          }
           <div
             className='App'
             onDoubleClick={(e) => this.onDoubleClick(e.target)}
@@ -92,7 +106,7 @@ class App extends React.Component {
               </Route>
               { !this.props.authenticated &&
                 <Route path="/signup">
-                  <p>Signup Goes here</p>
+                  <Signup />
                 </Route>
               }
 

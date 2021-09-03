@@ -16,7 +16,7 @@ module Types
     def budget_categories(id: nil)
       query = id ? { id: id } : {}
 
-      BudgetCategory.where(query)
+      BudgetCategory.where(**query, user_id: context[:current_user].id)
     end
   end
 end

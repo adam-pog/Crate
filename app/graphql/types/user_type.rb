@@ -9,6 +9,14 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
-    field :budget_categories, [::Types::BudgetCategoryType], null: false
+    field :budget_categories, [::Types::BudgetCategoryType], null: false do
+      argument :id, ID, required: false
+    end
+
+    def budget_categories(id: nil)
+      query = id ? { id: id } : {}
+
+      BudgetCategory.where(**query, user_id: context[:current_user].id)
+    end
   end
 end

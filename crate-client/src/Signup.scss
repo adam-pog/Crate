@@ -37,7 +37,7 @@
   filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.5));
 }
 
-.loginSubmit {
+.signupSubmit {
   // height: 5%;
   width: 15%;
   background-color: #007ba0bb;
@@ -48,7 +48,7 @@
   box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }
 
-.loginSubmit:hover {
+.signupSubmit:hover {
   background-color: #21ab79;
 }
 
@@ -59,7 +59,7 @@
     width: 100%;
   }
 
-  .loginSubmit {
+  .signupSubmit {
     width: 40%;
     padding: 2%;
     margin-top: 5%;

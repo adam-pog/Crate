@@ -8,14 +8,9 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :current_user, UserType, null: false, description: 'a list of users'
-    field :users, [UserType], null: false
 
     def current_user
       context[:current_user]
-    end
-
-    def users
-      User.all
     end
   end
 end

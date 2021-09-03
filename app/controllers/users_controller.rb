@@ -6,8 +6,7 @@ class UsersController < ApplicationController
     user.email.downcase!
 
     status = user.save ? :ok : :bad_request
-
-    render json: {}, status: status
+    render json: {errors: user.errors.messages}, status: status
   end
 
   private

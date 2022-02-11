@@ -6,7 +6,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.19",
     "graphql": "^15.5.0",
-    "node-sass": "^6.0.0",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",

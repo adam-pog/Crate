@@ -5,7 +5,7 @@ class BudgetCategoryController < ActionController::API
         "#{BudgetCategory.table_name}.*", 
         "budgets.month AS month",
         "budgets.year AS year",
-        "COALESCE(SUM(transactions.amount), 0) AS spent"
+        "COALESCE(SUM(transactions.amount), 0)::numeric AS spent"
       )      
       .joins(:budget)
       .left_outer_joins(:transactions)
@@ -26,7 +26,7 @@ class BudgetCategoryController < ActionController::API
         "#{BudgetCategory.table_name}.*", 
         "budgets.month AS month",
         "budgets.year AS year",
-        "COALESCE(SUM(transactions.amount), 0) AS spent"
+        "COALESCE(SUM(transactions.amount), 0)::numeric AS spent"
       )      
       .joins(:budget)
       .left_outer_joins(:transactions)

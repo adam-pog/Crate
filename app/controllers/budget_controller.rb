@@ -11,7 +11,7 @@ class BudgetController < ActionController::API
     #   .left_outer_joins(:transactions)
     #   .group('budget_categories.id')
     budgets = Budget
-      .select("#{Budget.table_name}.*, COALESCE(budgets.amount - SUM(transactions.amount), budgets.amount) AS net")
+      .select("#{Budget.table_name}.*, COALESCE(budgets.amount - SUM(transactions.amount), budgets.amount)::numeric AS net")
       .where(year: params[:year])
       .left_outer_joins(:budget_categories => :transactions)
       .group('budgets.id')
@@ -75,13 +75,14 @@ class BudgetController < ActionController::API
     budgets = {}
     params[:transactions].each do |parsed_transaction|
       date = parse_date(parsed_transaction[:date])
-      if not budgets[date.year]
-        budget = Budget.includes(:budget_categories).find_by(year: date.year)
-        budgets[date.year] = budget
+      if not budgets.dig(date.year, date.month)
+        budget = Budget.includes(:budget_categories).find_by(year: date.year, month: Date::MONTHNAMES[date.month])
+        budgets[date.year] = {}
+        budgets[date.year][date.month] = budget
       end
 
       transaction = Transaction.new(amount: parsed_transaction[:amount], source: parsed_transaction[:source], date: date)
-      category = budgets[date.year].budget_categories.find{ |category| category.name == parsed_transaction[:category] }
+      category = budgets[date.year][date.month].budget_categories.find{ |category| category.name == parsed_transaction[:category] }
 
       category.transactions << transaction
     end

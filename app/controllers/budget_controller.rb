@@ -72,10 +72,18 @@ class BudgetController < ActionController::API
   end
 
   def bulk_upload
-    params[:transactions].each do |transaction|
-      date = parse_date(transaction[:date])
-      require 'pry'
-      binding.pry
+    budgets = {}
+    params[:transactions].each do |parsed_transaction|
+      date = parse_date(parsed_transaction[:date])
+      if not budgets[date.year]
+        budget = Budget.includes(:budget_categories).find_by(year: date.year)
+        budgets[date.year] = budget
+      end
+
+      transaction = Transaction.new(amount: parsed_transaction[:amount], source: parsed_transaction[:source], date: date)
+      category = budgets[date.year].budget_categories.find{ |category| category.name == parsed_transaction[:category] }
+
+      category.transactions << transaction
     end
   end
 
@@ -85,10 +93,10 @@ class BudgetController < ActionController::API
     # budget_categories = BudgetCategory.joins(:budget).where(budget: {year: params[:year]})
  
     transactions.map do |transaction|
-      if transaction[:source].include?('WALMART') || transaction[:category].include?('Restaurants') || transaction[:category].include?('Supermarkets')
+      if transaction[:source].include?('WALMART') || transaction[:category].include?('Supermarkets')
         transaction[:category] = 'Food'
       elsif transaction[:source].include?('ONECHILD') || transaction[:source].include?('REASONABLE FAITH')
-        transaction[:category] = 'Giving'      
+        transaction[:category] = 'Giving'
       elsif transaction[:source].include?('COMCAST')
         transaction[:category] = 'Internet'
       elsif transaction[:category].include?('Travel')
@@ -104,8 +112,8 @@ class BudgetController < ActionController::API
   end
 
   def parse_date(month_day)
-    month, day = month_day.split('/')
+    month, day, year = month_day.split('/')
 
-    DateTime.new(params[:year].to_i, month.to_i, day.to_i)
+    DateTime.new("20#{year}".to_i, month.to_i, day.to_i)
   end
 end

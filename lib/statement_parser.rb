@@ -12,37 +12,22 @@ module StatementParser
     # lines = reader.pages[0].text.split("\n").map(&:squish).reject(&:blank?)
     transactions = []
 
-    if pages[0][0].include?('DISCOVER IT CHROME')
-      pages.each do |page|
-        page.each do |line|
-          match_data = line.match(/^(\d{2}\/\d{2})(.*)\s(.*)\s(\$\d*\.*\d*)/)
-          
-          if match_data
+    pages.each do |page|
+      page.each do |line|
+        match_data = line.match(/^\d{2}\/\d{2}\/\d{2}(\s\d{2}\/\d{2}\/\d{2})\s(.*)\s\$\s*(\d*.\d*)\s(.*)/)
+        
+        if match_data
+          unless match_data[4] == 'Payments and Credits'
             transactions << {
               date: match_data[1],
               source: match_data[2],
-              category: match_data[3],
-              amount: match_data[4]
+              amount: match_data[3],
+              category: match_data[4]
             }
           end
         end
       end
-    end
-
-    # month1, _ = transactions[0][:date].split('/')
-    last_transaction_month, _ = transactions[-1][:date].split('/')
-
-    last_transaction_month == '01' ? year2 = year + 1 : year2 = year
-
-    transactions.each do |transaction|
-      month, _ =  transaction[:date].split('/')
-
-      if month == '01' 
-        transaction[:date] = "#{year2}/#{transaction[:date]}"
-      else
-        transaction[:date] = "#{year}/#{transaction[:date]}"
-      end
-    end
+    end    
     
     return transactions
   end

@@ -1,6 +1,15 @@
 class TransactionController < ActionController::API
   def index
-    render json: { transactions: Transaction.where(budget_category_id: params[:category_id]) }
+    render json: { 
+      transactions: Transaction.where(budget_category_id: params[:category_id]).map do |transaction|
+        { 
+          id: transaction.id,
+          amount: transaction.amount, 
+          source: transaction.source, 
+          date: transaction.date.day.ordinalize 
+        }
+      end
+    }
   end
 
   def create
@@ -27,7 +36,7 @@ class TransactionController < ActionController::API
       transaction: {
         amount: transaction.amount,
         description: transaction.description,
-        date: transaction.date.to_i,
+        date: transaction.date.day.to_i,
         source: transaction.source
       }
     }

@@ -1,0 +1,25 @@
+services:
+  db:
+    container_name: db
+    image: postgres:13
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+  web:
+    container_name: web
+    build: .
+    entrypoint: /myapp/docker-entrypoint.sh
+    command: rails s -p 8000 -b 0.0.0.0
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/myapp
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
